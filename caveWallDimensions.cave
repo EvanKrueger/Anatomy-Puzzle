@@ -1,0 +1,11 @@
+<vizcave>
+<farPlane>-1.000000</farPlane>
+<nearPlane>0.100000</nearPlane>
+<wall>
+<name>floor</name>
+<upperLeft>-1.281602 0.000000 2.240667</upperLeft>
+<upperRight>1.337285 0.000000 2.209616</upperRight>
+<lowerLeft>-1.242302 0.000000 -2.327160</lowerLeft>
+<lowerRight>1.316278 0.000000 -2.319970</lowerRight>
+</wall>
+</vizcave>

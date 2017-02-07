@@ -26,6 +26,7 @@ class MenuController(object):
 	def __init__(self):
 
 		self.canvas = viz.addGUICanvas(scene = viz.Scene2)
+#		self.canvas.setRenderScreenOrtho()
 		canvas = self.canvas
 		
 		
@@ -62,7 +63,7 @@ class MenuController(object):
 		# Which subsets were selected
 		model.selected.modeSelected(self.modeMenu.radioButtons)
 		model.selected.objectsSelected(self.layerMenu)
-		
+
 		# Startup the game if there have been selections on layer menu
 		if model.selected.mode != 'Movement Tutorial' and model.selected.load:
 			yield self.changeMenu(self.layerMenu, self.inGameMenu)

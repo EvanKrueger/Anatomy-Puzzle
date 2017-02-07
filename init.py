@@ -21,6 +21,9 @@ import oculus
 import config
 import games
 
+# added to access grab command from pointerInput
+import anatomyTrainer
+
 # Dependencies
 import numpy
 
@@ -181,7 +184,7 @@ class CameraKeyboardControl(viz.EventClass):
 					else: # mainview above floor
 						camcenter.setEuler([0,-1.5,0] , viz.REL_LOCAL)
 					
-# Maybe Comment out this class?
+
 class DisplayInstance():
 	"""?"""
 	def __init__(self, displayMode, camMode, device, pointer):
@@ -212,11 +215,15 @@ class DisplayInstance():
 		elif self.displayMode == 1:
 			viz.setMultiSample(4)
 			viz.go(viz.STEREO_HORZ | viz.FULLSCREEN)
+#			viz.go(viz.QUAD_BUFFER | viz.FULLSCREEN)
 			
 		elif self.displayMode == 2:
 			viz.go(viz.STEREO_HORZ)
-			viz.setMultiSample(16)
 			viz.window.setSize([1280,720])
+			viz.setMultiSample(16)
+			# EVAN: changed to quad buffer 
+#			viz.go(viz.QUAD_BUFFER | viz.FULLSCREEN)  
+			
 			
 			KEYS = {
 				'reset'		: 'r',
@@ -310,10 +317,9 @@ class DisplayInstance():
 			
 			vizact.onupdate(0, UpdateMovement)
 
-	#	elif mode == 2:
-	#		# wiimote
-	#		pass
-
+		elif mode == 2:
+			pass
+			# wiimote
 		else:
 			raise ValueError('Invaid control mode selection')
 		
@@ -352,14 +358,35 @@ def loadTemple(bounding = True):
 		boundingBox.alpha(0.25)
 
 def pointerInput(mode, pointer, arena):
-	viz.phys.enable()
 	"""
-	Initialize the pointer tool
-	
-	Mode selection:
+	One sentence description of function's purpose.
+
+	Parameters
+	----------
+	mode : int
 		0 - Keyboard driven
 		1 - Spacemouse (WARNING: potential conflict with camera mode 1)
+	pointer : <node3d> object
+		The .ply object file used as the pointer in the game. 
+		This is created by calling viz.addChild() with the 
+		relative filepath to the .ply file as the argument.
+	out : <node3d> object
+		The environment used in the game.
+		Example: viz.addChild('gallery.osgb').
+
+	Returns
+	-------
+	device : empty object [,3Dconnexion]
+		if using the spacemouse (mode=1), function will return a 
+		3Dconnexion device object, which is an overloaded verison 
+		of Vizard's sensor object.
+	
+	Notes
+	-----
+	This function perhaps does too much for the scope of one call.
 	"""
+	
+	viz.phys.enable()
 	
 	proxy = vizproximity.Manager()
 	proxy.setDebug(viz.TOGGLE)
@@ -369,7 +396,7 @@ def pointerInput(mode, pointer, arena):
 	
 #	proxy.addSensor(theSensor)
 	proxy.addTarget(theTarget)
-		
+	
 	vizact.onkeydown('l',pointer.setPosition,[0,1,0])
 	vizact.onkeydown('l',pointer.setVelocity,[0,0,0])	
 	vizact.onkeydown('l',pointer.setAngularVelocity,[0,0,0])
@@ -384,12 +411,12 @@ def pointerInput(mode, pointer, arena):
 		#fixedRotation.setMask(viz.LINK_ORI)
 		
 		speed = 3.0
-		vizact.whilekeydown('w',pointer.setPosition,[0,vizact.elapsed(speed),0],viz.REL_LOCAL)
-		vizact.whilekeydown('x',pointer.setPosition,[0,vizact.elapsed(-speed),0],viz.REL_LOCAL)
-		vizact.whilekeydown('d',pointer.setPosition,[vizact.elapsed(speed),0,0],viz.REL_LOCAL)
-		vizact.whilekeydown('a',pointer.setPosition,[vizact.elapsed(-speed),0,0],viz.REL_LOCAL)
-		vizact.whilekeydown('e',pointer.setPosition,[0,0,vizact.elapsed(speed)],viz.REL_LOCAL)
-		vizact.whilekeydown('z',pointer.setPosition,[0,0,vizact.elapsed(-speed)],viz.REL_LOCAL)
+		vizact.whilekeydown('w', pointer.setPosition, [0, vizact.elapsed(speed), 0], viz.REL_LOCAL)
+		vizact.whilekeydown('x', pointer.setPosition, [0, vizact.elapsed(-speed), 0], viz.REL_LOCAL)
+		vizact.whilekeydown('d', pointer.setPosition, [vizact.elapsed(speed), 0, 0], viz.REL_LOCAL)
+		vizact.whilekeydown('a', pointer.setPosition, [vizact.elapsed(-speed), 0, 0], viz.REL_LOCAL)
+		vizact.whilekeydown('e', pointer.setPosition, [0, 0, vizact.elapsed(speed)], viz.REL_LOCAL)
+		vizact.whilekeydown('z', pointer.setPosition, [0, 0, vizact.elapsed(-speed)], viz.REL_LOCAL)
 		
 	elif mode == 1:
 		# Set up pointer control with the Spacemouse
@@ -443,9 +470,88 @@ def pointerInput(mode, pointer, arena):
 		
 		return device
 		
-	else:
-		raise ValueError('Invaid control mode selection')	
+		
+	elif mode == 2: ### WIIMOTE CODE
+		# EVAN: Added 2016.02.06
+		print "made it here"
+		# create wii from plug-in (i.e. an overloaded sensor object)
+		wii = viz.add('wiimote.dle')
+		
+		# connect to first available wiimote 
+		wiimote = wii.addWiimote()
+		
+		# Make sure it is disconnected on quit
+		vizact.onexit(wiimote.remove)
+		
+		# Turn on leds to show connection
+		wiimote.led = wii.LED_2 | wii.LED_3 
+		
+		def buttonPress(wiimote):
+			"""
+			This function serves to call the grab() method from 
+			the tutorialGame when the wiimote trigger is pulled.
 
+			Parameters
+			----------
+			wiimote : Vizard extension sensor
+
+			Returns
+			-------
+			None
+			"""
+			
+			# return integer code corresponding with button ID
+			buttonState = wiimote.getButtonState()
+			
+			if buttonState == 32: # corresponds to B (the trigger)
+				print("Button Pressed")
+				
+				# call the grab() from tutorialGame when trigger is pulled
+				anatomyTrainer.model.gameController.grab()
+				
+			else:
+				pass
+		
+		def buttonRelease(wiimote):
+			"""
+			This function serves to call the release() method from 
+			the tutorialGame when the wiimote trigger is pulled.
+
+			Parameters
+			----------
+			wiimote : Vizard extension sensor
+
+			Returns
+			-------
+			None
+			"""
+			
+			# return integer code corresponding with button ID
+			buttonState = wiimote.getButtonState()
+			
+			if buttonState == 0: # corresponds to B (the trigger)
+				print("Button Released")
+				
+				# call the release() from tutorialGame when trigger is pulled
+				anatomyTrainer.model.gameController.release()
+			
+			else:
+				pass
+
+		# run buttonPress() when B is held
+		vizact.onsensordown(wiimote, wii.BUTTON_B, buttonPress, wiimote)
+		# run corresponding release() function when trigger is released 
+		vizact.onsensorup(wiimote, wii.BUTTON_B, buttonRelease, wiimote)
+		
+		return wiimote
+		
+	else:
+		raise ValueError('Invaid control mode selection')
+
+	
+	
+	
+	
 def EnterProximity(e):
 	#print('Hit the wall')
 	pointer.setVelocity([0,0,0])

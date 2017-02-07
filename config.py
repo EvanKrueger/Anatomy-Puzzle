@@ -16,14 +16,14 @@ DATASET_PATH = '.\\dataset\\full\\'
 # Display mode options:
 ##############################
 class DisplayMode:
-	"""pseudo enumerated diplsy types"""
+	"""pseudo enumerated display types"""
 	#  0 - Regular computer
 	#  1 - 3D TV
 	#  2 - Oculus rift
-	MODES = {\
-		'Monitor':		0, \
-		'TV':			1, \
-		'Oculus':		2, \
+	MODES = {
+		'Monitor':		0, 
+		'TV':			1, 
+		'Oculus':		2, 
 		'Fullscreen':	3}
 	
 	monitor		= 0
@@ -34,10 +34,10 @@ class DisplayMode:
 
 dispMode = DisplayMode.monitor
 
-menuScaleConfig = { \
-	0:{'main': 1.2, 'mode': 1.0, 'layer': 0.75, 'ingame': 1.0, 'test': 2.0, 'loading': 1.0}, \
-	1:{'main': 0.5, 'mode': 1.0, 'layer': 0.30, 'ingame': 1.0, 'test': 1.0, 'loading': 1.0}, \
-	2:{'main': 1.0, 'mode': 1.0, 'layer': 0.30, 'ingame': 1.0, 'test': 2.0, 'loading': 1.0}, \
+menuScaleConfig = { 
+	0:{'main': 1.2, 'mode': 1.0, 'layer': 0.75, 'ingame': 1.0, 'test': 2.0, 'loading': 1.0}, 
+	1:{'main': 0.5, 'mode': 1.0, 'layer': 0.30, 'ingame': 1.0, 'test': 1.0, 'loading': 1.0}, 
+	2:{'main': 1.0, 'mode': 1.0, 'layer': 0.30, 'ingame': 1.0, 'test': 2.0, 'loading': 1.0}, 
 	3:{'main': 1.2, 'mode': 1.0, 'layer': 0.75, 'ingame': 1.0, 'test': 2.0, 'loading': 1.0}}
 	
 menuScale = menuScaleConfig[dispMode]
@@ -71,13 +71,16 @@ class PointerMode:
 	#  2 - Mouse plane selection?
 	MODES = {\
 		'Keyboard': 0, \
-		'SpaceMouse': 1\
+		'SpaceMouse': 1,\
+		'Wiimote': 2\
 		}
 	keyboard	= 0
 	spaceMouse	= 1
-	label = {'Keyboard Control': 0, 'SpaceMouse Control': 1}
+	wiimote		= 2
+	label = {'Keyboard Control': 0, 'SpaceMouse Control': 1, 'Wiimote Control': 2}
 
 pointerMode = PointerMode.spaceMouse
+pointerMode =2
 
 """
 Dictionary of lists:
