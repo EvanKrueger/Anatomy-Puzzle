@@ -298,7 +298,7 @@ class InterfaceTutorial(object):
 		yield viztask.waitTime(1)
 		self.outlineCenter.addAction(transition)
 		self.iterations = self.iterations+1
-		if self.iterations == 10:
+		if self.iterations == 12:
 			self.recordData.event(event = 'FINISHED', result = 'FINISHED')
 			self.end()
 	def resetGlove(self):

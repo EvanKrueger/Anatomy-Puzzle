@@ -418,7 +418,7 @@ wiimoteRigid.link_pose(wiiSphere)
 ### Start Game
 # import Erik's anatomyTrainer module to access game code
 import anatomyTrainer
-anatomyTrainer.model.trial = 2
+anatomyTrainer.model.trial = 3
 # game setup, passing wiiSphere to allow model.pointer to see it
 anatomyTrainer.start(wiiSphere)
 # start tutorial game directly, bypassing menus
