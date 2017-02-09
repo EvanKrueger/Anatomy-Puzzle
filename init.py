@@ -504,7 +504,7 @@ def pointerInput(mode, pointer, arena):
 			buttonState = wiimote.getButtonState()
 			
 			if buttonState == 32: # corresponds to B (the trigger)
-				print("Button Pressed")
+#				print("Button Pressed")
 				
 				# call the grab() from tutorialGame when trigger is pulled
 				anatomyTrainer.model.gameController.grab()
@@ -530,7 +530,7 @@ def pointerInput(mode, pointer, arena):
 			buttonState = wiimote.getButtonState()
 			
 			if buttonState == 0: # corresponds to B (the trigger)
-				print("Button Released")
+#				print("Button Released")
 				
 				# call the release() from tutorialGame when trigger is pulled
 				anatomyTrainer.model.gameController.release()

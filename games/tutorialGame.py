@@ -25,7 +25,6 @@ import model
 import menu
 import puzzleGame
 
-
 class InterfaceTutorial(object):
 	"""
 	This game mode is intended to instruct novice users in the use of the SpaceMouse
@@ -33,6 +32,9 @@ class InterfaceTutorial(object):
 	'teapot trainer' tutorial that ships with the SpaceMouse device.
 	"""
 	def __init__(self, dataset):
+		
+		self.trial = model.trial
+		self.moveFunc = self.transform()
 		
 		self.snapFlag = False
 		self.proxList = []
@@ -51,20 +53,10 @@ class InterfaceTutorial(object):
 		self.origPosVec = config.SMPositionScale
 		self.origOrienVec = config.SMEulerScale
 		
-		#creating directions panel
-#		viz.mouse.setVisible(False)
-#		directions = vizinfo.InfoPanel('', fontSize = 10, parent = canvas, align = viz.ALIGN_LEFT_TOP, title = 'Tutorial', icon = False)
-#		if config.pointerMode ==0:
-#			directions.addItem(viz.addText('Keyboard Controls:'))
-#			directions.addLabelItem(viz.addText('W'))
-#		
-#		if config.pointerMode ==1:
-#			directions.addItem(viz.addText('Spacemouse Controls:'))
-#			directions.addItem(viz.addTexQuad(size = 300, parent = canvas, texture = viz.addTexture('.\\mouse key.png')))
-		
 		
 		#creating tutorial objects
 		self.dog = viz.addChild('.\\dataset\\dog\\dog.obj')
+#		self.dog.setCenter(0,1,0)
 		self.dogStart = self.dog.getPosition()
 		self.dog.setScale([sf,sf,sf])
 		self.startColor = model.pointer.getColor()
@@ -80,11 +72,11 @@ class InterfaceTutorial(object):
 		self.manager = vizproximity.Manager()
 		
 		'''creating dog grab and snap sensors around sphere palced in the center of the dog'''
-		self.dogCenter = vizshape.addSphere(0.1, pos = (self.dogStart))
-		self.outlineCenter = vizshape.addSphere(0.2*sf, pos = (self.dogStart))
+		self.dogCenter = vizshape.addSphere(0.1*sf, pos = (self.dogStart))
+		self.outlineCenter = vizshape.addSphere(0.1*sf, pos = (self.dogStart))
 		
 		'''			EVAN LOOK HERE			'''
-		''' SETTING PROXIMITY SENSORS ABOVER DOG ORIGIN SO AS TO ENCOMPASS DOG'''
+		''' SETTING PROXIMITY SENSORS ABOVE DOG ORIGIN SO AS TO ENCOMPASS DOG'''
 		self.dogCenter.setPosition([[x,y+0.5,z] for x,y,z in [self.dog.getPosition()]][0])
 		self.outlineCenter.setPosition([[x,y+0.5,z] for x,y,z in [self.dog.getPosition()]][0])
 
@@ -94,19 +86,19 @@ class InterfaceTutorial(object):
 
 		self.dogCenter.color(5,0,0)
 		self.outlineCenter.color(0,5,0)
-		self.dogCenter.visible(viz.OFF)
-		self.outlineCenter.visible(viz.OFF)
+		self.dogCenter.visible(viz.ON)
+		self.outlineCenter.visible(viz.ON)
 		
 		self.dogSnapSensor = vizproximity.Sensor(vizproximity.Sphere(0.7*sf, center = [0,0,0]), source = self.dogCenter)
 		self.manager.addSensor(self.dogSnapSensor)
-		self.dogGrabSensor = vizproximity.Sensor(vizproximity.Sphere(1.7*sf, center = [0,0,0]), source = self.dogCenter)
+		self.dogGrabSensor = vizproximity.Sensor(vizproximity.Sphere(1.7*sf, center = [0,0.25,0]), source = self.dogCenter)
 		self.manager.addSensor(self.dogGrabSensor)
 		
 		'''creating glove target and a dog target. the dog target is a sphere placed at the center of the dog outline'''
 		self.gloveTarget = vizproximity.Target(model.pointer)
 		self.manager.addTarget(self.gloveTarget)
 		self.dogTargetMold = vizshape.addSphere(0.2,parent = self.dogOutline, pos = (self.dogStart))
-		self.dogTargetMold.setPosition([0,1.2,0])
+		self.dogTargetMold.setPosition([0,0,0])
 		self.dogTargetMold.visible(viz.OFF)
 		self.dogTarget = vizproximity.Target(self.dogTargetMold)
 		self.manager.addTarget(self.dogTarget)
@@ -126,6 +118,107 @@ class InterfaceTutorial(object):
 		self.interface = viztask.schedule(self.interfaceTasks())
 		self.gameMechanics = viztask.schedule(self.mechanics())
 	
+	def resetPos(self):
+		self.outlineCenter.setEuler(0,0,0)
+		self.outlineCenter.setPosition(0,0.5,0)
+		self.dogCenter.setEuler(0,0,0)
+		self.dogCenter.setPosition(0,0.5,0)
+	# EVAN
+	def transform(self):
+		trialNum = self.trial
+		# seed the pseudo-random number generator with trial number
+		# (ensures each participant gets same "random" sequence for
+		# each trial number)
+		random.seed(trialNum)
+		
+		# create dictionaries once per trial
+		movements = {
+				'x2' : [0.5, 0.5, 0.0],
+				'x3' : [1.0, 0.5, 0.0],
+				'x4' : [-0.5, 0.5, 0.0],
+				'x5' : [-1.0, 0.5, 0.0],
+				
+				'y1' : [0.0, 0.0, 0.0],
+				'y2' : [0.0, 0.25, 0.0],
+				'y4' : [0.0, 0.75, 0.0],
+				'y5' : [0.0, 1.0, 0.0],
+				
+				'z2' : [0.0, 0.5, 0.5],
+				'z3' : [0.0, 0.5, 1.0],
+				'z4' : [0.0, 0.5, -0.5],
+				'z5' : [0.0, 0.5, -1.0],
+				}
+#		movements = {
+#				'x1' : [0.0, 0.5, 0.0],
+#				'x2' : [0.5, 0.5, 0.0],
+#				'x3' : [1.0, 0.5, 0.0],
+#				'x4' : [-0.5, 0.5, 0.0],
+#				'x5' : [-1.0, 0.5, 0.0],
+#				
+#				'y1' : [0.0, 0.0, 0.0],
+#				'y2' : [0.0, 0.25, 0.0],
+#				'y3' : [0.0, 0.50, 0.0],
+#				'y4' : [0.0, 0.75, 0.0],
+#				'y5' : [0.0, 1.0, 0.0],
+#				
+#				'z1' : [0.0, 0.5, 0.0],
+#				'z2' : [0.0, 0.5, 0.5],
+#				'z3' : [0.0, 0.5, 1.0],
+#				'z4' : [0.0, 0.5, -0.5],
+#				'z5' : [0.0, 0.5, -1.0],
+#				}
+		orientations = {
+				'x1' : [-90, 0, 0],
+				'x2' : [-45, 0, 0],
+				'x4' : [45, 0, 0],
+				'x5' : [90, 0, 0],
+				
+				'y1' : [0, -90, 0],
+				'y2' : [0, -45, 0],
+				'y4' : [0, 45, 0],
+				'y5' : [0, 90, 0],
+				
+				'z1' : [0, 0, -90],
+				'z2' : [0, 0, -45],
+				'z4' : [0, 0, 45],
+				'z5' : [0, 0, 90],
+		}
+#		orientations = {
+#				'x1' : [-90, 0, 0],
+#				'x2' : [-45, 0, 0],
+#				'x3' : [0, 0, 0],
+#				'x4' : [45, 0, 0],
+#				'x5' : [90, 0, 0],
+#				
+#				'y1' : [0, -90, 0],
+#				'y2' : [0, -45, 0],
+#				'y3' : [0, 0, 0],
+#				'y4' : [0, 45, 0],
+#				'y5' : [0, 90, 0],
+#				
+#				'z1' : [0, 0, -90],
+#				'z2' : [0, 0, -45],
+#				'z3' : [0, 0, 0],
+#				'z4' : [0, 0, 45],
+#				'z5' : [0, 0, 90],
+#				}
+		
+		def randomTransform():
+			if trialNum == 1:
+				positions = movements.pop(random.choice(movements.keys()))
+				angles = [0, 0, 0]
+			elif trialNum == 2:
+				positions = [0.0, 0.5, 0.0]
+				angles = orientations.pop(random.choice(orientations.keys()))
+#				angles = orientations.pop(sorted(orientations.keys())[0])
+			elif trialNum == 3:
+				positions = movements.pop(random.choice(movements.keys()))
+				angles = orientations.pop(random.choice(orientations.keys()))
+			return positions, angles
+				
+		return randomTransform
+
+
 	def load(self, dataset):
 		'''Accept dataset, but do nothing with it'''
 		pass
@@ -139,16 +232,10 @@ class InterfaceTutorial(object):
 			self.dogCenter.visible(viz.OFF)
 			self.outlineCenter.visible(viz.OFF)
 			self.dogTargetMold.visible(viz.OFF)
-			self.mainAxes.remove()
-			self.outlineAxes.remove()
-			self.dogAxes.remove()
 		else:
 			self.dogCenter.visible(viz.ON)
 			self.outlineCenter.visible(viz.ON)
 			self.dogTargetMold.visible(viz.ON)
-			self.mainAxes = vizshape.addAxes()
-			self.outlineAxes = vizshape.addAxes(parent = self.outlineCenter)
-			self.dogAxes = vizshape.addAxes(parent = self.dogCenter)
 			
 	def interfaceTasks(self):
 		"""
@@ -183,8 +270,6 @@ class InterfaceTutorial(object):
 		model.pointer.setPosition([0,1,0])
 		self.proxList = []
 		self.gloveLink = None
-		config.SMEulerScale = self.origOrienVec
-		config.SMPositionScale = self.origPosVec
 		self.recordData.close()
 		for bind in self.keybindings:
 			bind.remove()
@@ -193,144 +278,29 @@ class InterfaceTutorial(object):
 		"""tutorial mechanics: moves the dog outline around the environment and waits for the dog to be snapped to it
 		before preforming the next action."""
 		
-		self.recordData.event(event = 'ROUND ' + str(self.iterations), result = 'move along all axis')
-		randomPos = [2*(random.random()-0.5),2*(random.random()-0.5),2*(random.random()-0.5)]
-		randomEuler = [random.randint(-90,90),random.randint(-90,90),random.randint(-90,90)]
+		#Move back to start position and angle
+#		self.resetPos()
+#		movePos = vizact.moveTo((0,0.5,0), time = self.animateOutline)
+#		moveAng = vizact.spinTo((0,0,0), time = self.animateOutline)
+#		transition = vizact.parallel(movePos, moveAng)
+#		self.outlineCenter.addAction(transition)
+		
+#		#EVAN LOOK HERE: SETS POSITIONS OF DOGS
+#		randomPos = [1*(random.random()-0.5),abs(1*(random.random()-0.5)),2*(random.random()-0.5)]
+#		randomEuler = [random.randint(-90,90),random.randint(-90,90),random.randint(-90,90)]
+		randomPos, randomEuler = self.moveFunc()
+		
+		#CHANGE RESULT TO TRIAL TYPE
+		self.recordData.event(event = self.trial, result = 'MOVE SOMEWHERE AND SOMETHING', x = randomPos[0], y = randomPos[1], z = randomPos[2])
 		self.movePos = vizact.moveTo(randomPos, time = self.animateOutline)
-		self.moveAng = vizact.spinTo(euler = randomEuler, time = self.animateOutline)
-		transition = vizact.parallel(self.movePos)
+		self.moveAng = vizact.spinTo(euler = randomEuler, time = self.animateOutline, mode = viz.ABS_GLOBAL)
+		transition = vizact.parallel(self.movePos, self.moveAng)
 		yield viztask.waitTime(1)
-		yield viztask.addAction(self.outlineCenter, transition)
-		
-#		if self.iterations ==0:
-#			#setting conditions for position transformations along single axis
-#			pass
-##			model.pointer.setParent(viz.WORLD)
-##			config.SMEulerScale = [0,0,0]
-##			self.proxList.append(self.dogCenter)
-#	
-##		elif self.iterations ==3:
-##			#setting conditions for position transformations along all axes
-##			self.proxList.remove(self.dogCenter)
-#	
-##		elif self.iterations==4:
-##			#setting conditinos for angular transformations
-##			self.proxList.append(self.dogCenter)
-##			config.SMEulerScale = self.origOrienVec
-##			config.SMPositionScale = [0,0,0]
-###			model.pointer.setPosition(0,1,-1)
-###			model.pointer.color(0,0,5)
-#	
-#		elif self.iterations==3:
-#			#setting conditions for positional and angular transformations
-##			model.pointer.color(self.startColor)
-##			model.pointer.setParent(model.display.camcenter)
-#			try: 
-#				self.proxList.remove(self.dogCenter)
-#			except ValueError:
-#				print 'dogCenter is not in proximity'
-#			config.SMEulerScale = self.origOrienVec
-#			config.SMPositionScale = self.origPosVec
-#	
-#		if self.iterations<=0:
-#			# X AXIS POS TRANSFORMATION
-##			config.SMPositionScale = [.0001,0,0]
-#			self.recordData.event(event = 'ROUND ' + str(self.iterations), result = 'move along x-axis')
-#			randomPos = [4*(random.random()-0.5), 0,0]
-#			self.movePos = vizact.move(randomPos[0],randomPos[1], randomPos[2], time = self.animateOutline)
-#			yield viztask.waitTime(1)
-#			yield viztask.addAction(self.outlineCenter, self.movePos)
-#		
-#		elif self.iterations>0 and self.iterations<=1:
-#			#Y AXIS POS TRANS
-##			config.SMPositionScale = [0,.0001,0]
-#			self.recordData.event(event = 'ROUND ' + str(self.iterations), result = 'move along y-axis')
-#			randomPos = [0, 2*(random.random()-0.5),0]
-#			self.movePos = vizact.move(randomPos[0],randomPos[1], randomPos[2], time = self.animateOutline)
-#			yield viztask.waitTime(1)
-#			yield viztask.addAction(self.outlineCenter, self.movePos)
-#	
-#		elif self.iterations>1 and self.iterations<=2:
-#			#Z AXIS POS TRANS
-##			config.SMPositionScale = [0,0,.0001]
-#			self.recordData.event(event = 'ROUND ' + str(self.iterations), result = 'move along z-axis')
-#			randomPos = [0,0,4*(random.random()-0.5)]
-#			self.movePos = vizact.move(randomPos[0],randomPos[1], randomPos[2], time = self.animateOutline)
-#			yield viztask.waitTime(1)
-#			yield viztask.addAction(self.outlineCenter, self.movePos)
-#	
-#		elif self.iterations>2 and self.iterations<=3:
-#			#ALL AXES POS TRANS
-##			config.SMPositionScale = self.origPosVec
-#			self.recordData.event(event = 'ROUND ' + str(self.iterations), result = 'move along all axis')
-#			randomPos = [0,1,-1]
-#			self.movePos = vizact.moveTo(randomPos, time = self.animateOutline)
-#			yield viztask.waitTime(1)
-#			yield viztask.addAction(self.outlineCenter, self.movePos)
-##		
-##		elif self.iterations>3 and self.iterations<=4:
-##			#X AXIS ANG TRANS
-##			config.SMEulerScale = [.01,0,0]
-##			model.pointer.setEuler(0,0,0)
-##			self.recordData.event(event = 'ROUND ' + str(self.iterations), result = 'euler about x-axis')
-##			thisEuler = [0,0,0]
-##			thisEuler[1] = random.randint(-100,100)
-##			self.moveAng = vizact.spinTo(euler = thisEuler, time = self.animateOutline, mode = viz.REL_GLOBAL)
-##			yield viztask.waitTime(1)
-##			yield viztask.addAction(self.outlineCenter, self.moveAng)
-##	
-##		elif self.iterations>4 and self.iterations<=5:
-##			#Y AXIS ANG TRANS
-##			config.SMEulerScale = [0,.01,0]
-##			model.pointer.setEuler(0,0,0)
-##			self.recordData.event(event = 'ROUND ' + str(self.iterations), result = 'euler about y-axis')
-##			thisEuler = [0,0,0]
-##			thisEuler[0] = random.randint(-100,100)
-##			self.moveAng = vizact.spinTo(euler = thisEuler, time = self.animateOutline, mode = viz.REL_GLOBAL)
-##			yield viztask.waitTime(1)
-##			yield viztask.addAction(self.outlineCenter, self.moveAng)
-##	
-##		elif self.iterations>5 and self.iterations<=6:
-##			#Z AXIS ANG TRANS
-##			config.SMEulerScale = [0,0,.01]
-##			model.pointer.setEuler(0,0,0)
-##			self.recordData.event(event = 'ROUND ' + str(self.iterations), result = 'euler about z-axis')
-##			thisEuler = [0,0,0]
-##			thisEuler[2] = random.randint(-100,100)
-##			self.moveAng = vizact.spinTo(euler = thisEuler, time = self.animateOutline, mode = viz.REL_GLOBAL)
-##			yield viztask.waitTime(1)
-##			yield viztask.addAction(self.outlineCenter, self.moveAng)
-##		
-##		elif self.iterations>6 and self.iterations<=7:
-##			#ALL AXES ANG TRANS
-##			config.SMEulerScale = self.origOrienVec
-##			model.pointer.setEuler(0,0,0)
-##			self.recordData.event(event = 'ROUND ' + str(self.iterations), result = 'euler about all axis')
-##			randomEuler = [random.randint(-100,100),random.randint(-100,100),random.randint(-100,100)]
-##			self.moveAng = vizact.spinTo(euler = randomEuler, time = self.animateOutline)
-##			yield viztask.waitTime(1)
-##			yield viztask.addAction(self.outlineCenter, self.moveAng)
-#	
-#		elif self.iterations>3 and self.iterations<=9:
-#			#ALL AXES POS AND ANG TRANS
-#			self.recordData.event(event = 'ROUND ' + str(self.iterations), result = 'move along all axis')
-#			randomPos = [4*(random.random()-0.5),2*(random.random()-0.5),4*(random.random()-0.5)]
-##			randomEuler = [random.randint(-90,90),random.randint(-90,90),random.randint(-90,90)]
-#			self.movePos = vizact.moveTo(randomPos, time = self.animateOutline)
-##			self.moveAng = vizact.spinTo(euler = randomEuler, time = self.animateOutline)
-#			transition = vizact.parallel(self.movePos)
-#			yield viztask.waitTime(1)
-#			yield viztask.addAction(self.outlineCenter, transition)
-#
-#		else:
-#			#END
-#			model.menu.toggle()
-#			config.SMEulerScale = self.origOrienVec
-#			config.SMPositionScale = self.origPosVec
-#			self.recordData.event(event = 'FINISHED', result = 'FINISHED')
-		
+		self.outlineCenter.addAction(transition)
 		self.iterations = self.iterations+1
-
+		if self.iterations == 10:
+			self.recordData.event(event = 'FINISHED', result = 'FINISHED')
+			self.end()
 	def resetGlove(self):
 		#move glove to starting position
 		model.pointer.setPosition(self.gloveStart)
@@ -392,7 +362,7 @@ class InterfaceTutorial(object):
 		eulerThres = 45
 		eulerDiff = vizmat.QuatDiff(self.outlineCenter.getQuat(), self.dogCenter.getQuat())
 		if self.snapFlag == True and eulerDiff <= eulerThres and self.gloveLink:
-			self.recordData.event(event = 'release', result = 'Snapped!')
+			self.recordData.event(event = 'release', result = 'Snapped!', angOffset = eulerDiff, posOffset = (vizmat.Distance(self.dogCenter.getPosition(), self.outlineCenter.getPosition())))
 			self.snap()
 		else:
 			self.recordData.event()
@@ -408,9 +378,16 @@ class InterfaceTutorial(object):
 		"""
 		movePos = vizact.moveTo(self.outlineCenter.getPosition(), time = self.snapTransitionTime)
 		moveAng = vizact.spinTo(euler = self.outlineCenter.getEuler(), time = self.snapTransitionTime)
-		transition = vizact.parallel(movePos, moveAng)
-		self.dogCenter.addAction(transition)
+#		transition = vizact.parallel(movePos, moveAng)
+#		self.dogCenter.addAction(transition)		
 		viz.playSound(".\\dataset\\snap.wav")
+		if not self.dogCenter.getAction() and not self.outlineCenter.getAction(): 
+			self.resetPos()
+#			movePos = vizact.moveTo((0,0.5,0), time = self.animateOutline)
+#			moveAng = vizact.spinTo((0,0,0), time = self.animateOutline)
+#			transition = vizact.parallel(movePos, moveAng)
+#			self.outlineCenter.addAction(transition)
+#			self.dogCenter.addAction(transition)
 		viztask.schedule(self.mechanics())
 #
 	def snapCheckEnter(self, e):
@@ -447,15 +424,14 @@ class TutorialData():
 			print "No directory?"
 			raise
 		self.csv = csv.writer(self.scoreFile)
-		self.header = ['timestamp','event','event result']
+		self.header = ['timestamp','event', 'event result','x', 'y', 'z', 'angular offset', 'positional offset']
 		self.events = []
 		self.csv.writerow(self.header)
 		
-	def event(self, event = "release", result = 'Did Not Snap'):
+	def event(self, x = 'n/a', y = 'n/a', z = 'n/a', event = "release", result = 'Did Not Snap', angOffset = 'n/a', posOffset = 'n/a'):
 		'''record event'''
-		currentEvent = dict(zip(self.header,[time.clock(), event, result]))
-		self.events.append(currentEvent)
-		self.csv.writerow([self.events[-1][column] for column in self.header])
+		currentEvent = dict(zip(self.header,[time.clock(), event, result, x,y,z,angOffset,posOffset]))
+		self.csv.writerow([currentEvent[column] for column in self.header])
 		
 	def close(self):
 		self.scoreFile.close()

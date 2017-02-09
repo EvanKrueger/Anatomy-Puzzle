@@ -22,7 +22,6 @@ def start(wiiSphere):
 
 	### Initialize pointer tool
 	# define pointer object as Polygon File Format (.ply) file
-#	model.pointer = viz.addChild('.\\dataset\\Hand\\handPoint_reduced.ply')
 	model.pointer = viz.addChild('.\\dataset\\Hand\\handPoint_reduced.ply', parent=wiiSphere, flags=viz.ROTATE_Y_UP)
 	model.pointer.visible(viz.OFF)
 	pointer = model.pointer
@@ -36,8 +35,6 @@ def start(wiiSphere):
 	sky.setPosition([0, 0, -5])
 	sky.collideMesh()
 	sky.disable(viz.DYNAMICS)
-	# EVAN: set scale for AR rendering
-	#sky.setScale([.15,.15,.15])
 
 	# Lighting
 	lights = []
@@ -53,16 +50,19 @@ def start(wiiSphere):
 	#	- sky is the environment (gallery.osgb)
 	config.pointerMode = 2
 	device = init.pointerInput(2, model.pointer, sky)
-	print device
+
+	# EVAN: I commented out both the display and menu code
+	# - it's not necessary if we are directly launching the tutorial game
+	
 	### Initialize display
 #	model.display = init.DisplayInstance(config.dispMode, config.camMode, device, pointer)
-	
-	### Launch menu system
+#	## Launch menu system
 #	model.menu = menu.MenuController()
 	
 	### Override escape key to toggle menu
 	viz.setOption('viz.default_key.quit','0')
-	
+
+	# EVAN: might comment out part that resets pointer
 	# Stuff to run on program termination
 	vizact.onexit(endGame)
 	

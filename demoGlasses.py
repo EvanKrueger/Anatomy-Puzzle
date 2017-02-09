@@ -5,7 +5,6 @@ import vizconnect
 viz.res.addPath('resources')
 sys.path.append('utils')
 
-
 from mocapInterface import phasespaceInterface	
 from configobj import ConfigObj
 from configobj import flatten_errors
@@ -402,35 +401,32 @@ class Experiment(viz.EventClass):
 		self.config.virtualPlane.attachViewToGlasses(self.eyeSphere,shutterRigid)
 	
 
-
+# create instance of Gabe's Experiment class to begin tracking portion of the code
 experimentObject = Experiment()
-
-#global piazza
-#piazza = viz.add('piazza.osgb')			
-
-#piazza.setScale([.15,.15,.15])
-#piazza.setPosition([0,0,-3])
-
 
 ### Set up Wiimote PhaseSpace Tracking
 wiiNode3D = viz.addGroup() # Create empty node3D
 wiimoteRigid = experimentObject.config.mocap.returnPointerToRigid('wii') # Get access to phasespace wiimote tracker / rigid body
 wiimoteRigid.link_pose(wiiNode3D) #Setup an automatic per-frame update of wiiNode3D using the transf. matrix from wiimoteRigid
-# Attach shape to wiimote controller
+
+### Attach shape to wiimote controller
 import vizshape
 wiiSphere = vizshape.addBox(size=[0.03,.03,.1])
 wiiSphere.visible(viz.OFF)
-#pointer = viz.addChild('.\\dataset\\Hand\\handPoint_reduced.ply', parent=wiiSphere, flags=viz.ROTATE_Y_UP)
-#pointer.setScale( [0.012, 0.012, 0.012] )
-#pointer.setEuler( [ 180, 0, 0 ] )
 wiimoteRigid.link_pose(wiiSphere)
 
-
+### Start Game
+# import Erik's anatomyTrainer module to access game code
 import anatomyTrainer
-# start puzzle game
+anatomyTrainer.model.trial = 2
+# game setup, passing wiiSphere to allow model.pointer to see it
 anatomyTrainer.start(wiiSphere)
+# start tutorial game directly, bypassing menus
 anatomyTrainer.startGame(anatomyTrainer.init.games.tutorialGame.InterfaceTutorial, [])
 
+# change pointer scale and rotation to align with wiimote and overall scale
+# (slightly unnecessary (and possibly redundant) change to scale, especially if ultimately set to invisible, but whatever)
 anatomyTrainer.model.pointer.setScale( [0.012, 0.012, 0.012] )
 anatomyTrainer.model.pointer.setEuler( [ 180, 0, 0 ] )
 
+#vizact.onkeydown(viz.KEY_ESCAPE, anatomyTrainer.restartGame(anatomyTrainer.init.games.tutorialGame.InterfaceTutorial))

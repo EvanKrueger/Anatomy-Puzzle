@@ -29,3 +29,5 @@ ds = None
 
 # Selected Datasets from Menu
 selected = None
+
+trial = 0
