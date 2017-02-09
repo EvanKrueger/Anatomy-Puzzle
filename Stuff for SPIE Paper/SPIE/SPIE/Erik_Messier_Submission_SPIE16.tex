@@ -1,0 +1,224 @@
+%  The following commands have been added in the SPIE class 
+%  file (spie.cls) and will not be understood in other classes:
+%  \supit{}, \authorinfo{}, \skiplinehalf, \keywords{}
+%  The bibliography style file is called spiebib.bst, 
+%  which replaces the standard style unstr.bst.  
+
+\documentclass[]{spie}  %>>> use for US letter paper
+%%\documentclass[a4paper]{spie}  %>>> use this instead for A4 paper
+%% \addtolength{\voffset}{9mm}   %>>> moves text field down
+%\addtolength{\voffset}{14mm}   %>>> moves text field down
+
+%  The following command loads a graphics package to include images 
+%  in the document. It may be necessary to specify a DVI driver option,
+%  e.g., [dvips], but that may be inappropriate for some LaTeX 
+%  installations. 
+\usepackage{csquotes}
+\usepackage{cite}
+\usepackage{tabularx}
+\usepackage[]{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+%\usepackage{subfigure}
+\usepackage{url}
+%\usepackage{amsmath}
+\usepackage[cmex10]{amsmath}
+\interdisplaylinepenalty=2500
+\usepackage[subnum]{cases}
+\MakeOuterQuote{"}
+
+\title{An Interactive, Stereoscopic Virtual Environment for Medical Imagning Visualization, Simulation and Training}
+
+\author{}
+ 
+\begin{document}
+\maketitle
+
+%\noindent{\bf Title:}
+%\skiplinehalf
+\noindent{\bf Abstract Submission for SPIE - Medical Imaging 2017. Conference Code: MI105.} \\
+%{\bf From pre-operative cardiac modeling to intra-operative virtual environments for surgical guidance: An {\it in vivo} feasibility study.} \\
+\skiplinehalf
+%
+{\bf Authors:}
+\skiplinehalf
+\supit{a}Erik Messier (E-mail: ejm3149@g.rit.edu)\\
+\supit{c}Evan Krueger (E-mail: evan.krueger@me.com)\\
+\supit{b}Gabriel Diaz (E-mail: gabriel.diaz@g.rit.edu)\\
+\supit{a,b*}Cristian A. Linte (E-mail: clinte@mail.rit.edu)\\
+\skiplinehalf
+%
+{\bf Affiliations:}
+\skiplinehalf
+
+\supit{a}Biomedical Engineering, Rochester Institute of Technology, \\
+\supit{b}Center for Imaging Science, Rochester Institute of Technology, \\
+\supit{c}College for Imaging Arts and Sciences, Rochester Institute of Technology, \\
+
+Rochester NY USA \\
+%\supit{2}Biomedical Engineering Graduate Program, University of Western Ontario, London ON Canada, \\
+%\supit{3}Division of Anesthesia, University of Western Ontario, London ON Canada, \\
+%\supit{4}Canadian Surgical Technologies and Advanced Robotics (CSTAR), London ON Canada, \\
+\skiplinehalf
+%
+{\bf Presentation Preference:}
+\skiplinehalf
+Oral Presentation - please assign to a session on virtual reality viualization, simulation or training\\
+\skiplinehalf
+%
+%{\bf Principal Author's Biography:}
+%\skiplinehalf
+%Cristian Linte received his undergraduate degree in Mechanical Engineering in 2004 and joined the Graduate Program in Biomedical Engineering at the University of Western Ontario. After completing his masters thesis in September 2006, Cristian started his doctoral project under the supervision of Dr. Terry Peters in the Imaging Research Laboratories at the Robarts Research Institute, where he had been working on the development, evaluation and clinical integration of image-guidance tools for intracardiac interventions. \\
+%  \skiplinehalf
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%ABSTRACT
+{\bf Abstract:}
+Despite recent advancements in medical image acquisition that allow for the reconstruction of anatomies with 3D, 4D, and 5D renderings, the standard for anatomical and medical data visualization still relies heavily on the use of traditional 2D didactic tools (i.e., textbooks and slides) or, at best, the visualization of the native images in their 2D slice format. While these approaches have their merit in being cost effective and easy-to-disseminate, anatomy is implicitly 3D and when using 2D visualizations of more complex morphologies, interactions between structures are often missed. In medical practice, such as in the planning and execution of surgical interventions, professionals require an intricate knowledge of anatomical complexities, which are more easily, or only can be, elucidated with more natural, intuitive method of interacting with complex 3D volumetric datasets extracted from high-resolution CT or MRI datasets. Leveraging open source, high quality, 3D medical imaging datasets and the emerging popularity of 3D display technologies; affordable, consistent, and widely available 3D anatomical visualizations can be achieved. In this study we describe the design, implementation, and evaluation of a 3D visualization paradigm for human anatomy extracted from 3D medical images using an interactive stereoscopic table-top display. Using a Northern Digital Polaris Spectra tracking system, and a reverse projection screen, a multiple-viewing-angle interactive stereoscopic display was created. While this paradigm is sufficiently versatile to enable a wide variety of applications in need of 3D visualization, we designed our study in the context of an interactive game that allows users to explore the anatomy of various organs and systems by manipulating 3D virtual data. In analysis we aim to quantify and qualify users’ visual and motor interactions with virtual environments, as well as quantify their learning capabilities when employing this interactive display as a 3D didactic tool.	
+
+%
+\keywords{Virtual Reality; Stereoscopic Visualization; Reverse Projection; Object Tracking; Motor interactions; Visual Interactions; Observer performance evaluation of new display devices; Image Perception; Observer Performance Evaluation; Technology assessment and impact} \\
+%
+\skiplinehalf
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%DESCRIPTION OF PURPOSE
+%{\bf Introduction and Objectives:}
+\section{Introduction}
+%\skiplinehalf
+%\noindent{Insert here.} 
+How do surgeons prepare for surgical interventions? Although every surgeon has their own ritualistic practices before entering the operating suite, it is a common practice amongst surgeons to review case details, related medical imagery and studies, and in some way visualize the surgical procedure they are about to perform. Ostensibly, the pre-operative objective of a surgeon is to simulate the surgery beforehand. However, the procedural tools that are most available to surgeons today make it difficult to most effectively prepare --- to simulate --- surgeries pre-operatively, especially as a growing number of complex surgeries are becoming increasingly minimally invasive \cite{kang2014stereoscopic},\cite{chan2013virtual}. The predominate forms of medical imagery used by surgeons in surgical preparation are Computed Tomography (CT) and Magnetic Resonance Imaging (MRI) scans. ¬These imaging tools only produce 2D interpretations of 3D data, which then requires the surgeon to translate the data from its 2D form into its useful 3D form \cite{ nam2012application},\cite{vaapenstad2013procedural}. Furthermore, in pre-operative preparation surgeons conventionally have access to tools such as cadavers and 3D anatomical models, but these tools are expensive, non-extensible, and not patient specific \cite{marescaux1998virtual}. Leveraging virtual environments and utilizing volume-rendered techniques to create 3D anatomical renderings from medical images; an extensible, patient specific, and cost efficient 3D procedural surgery simulator can be made \cite{ vaapenstad2013procedural},\cite{messier2016interactive}.
+
+This is a specific application of virtual reality (VR) in medicine --- there is much potential for the application of virtual environments in medicine --- and many steps need to be taken to realize this goal, and other VR goals in medicine \cite{ chan2013virtual}. Two of these steps are to evaluate, users’ motor and visual interactions with a virtual environment, and to evaluate users’ 3D learning benefits from stereoscopic displays. It is on these two steps that our proposed project is based. 
+
+In previous work we created an Interactive 3D virtual anatomy Puzzle for learning and simulation, which was developed for use with an Occulus Rift --- a head-mounted stereoscopic display --- and a 6-degrees-of-freedom (DoF) “space-mouse”, and this game was populated with the open source BodyParts3D anatomical dataset --- provided with full ontology --- shown in Fig. \ref{fig:Dataset}  \cite{messier2016interactive}. The purpose of our previous work was mainly to develop an entertaining, interactive, and useful didactic tool for young students (grades 6-12), a demographic that has very limited access to 3D didactic tools \cite{messier2016interactive},\cite{brewer2012evaluation}. In extension to this project we seek to apply our previously developed game to an interactive stereoscopic table-top display. Using a tracking system we have developed a stereoscopic, multiple-viewing-angle, and gesture operated platform for our puzzle game to be extended onto. From our newly developed system, we aim to study users’ motor and visual interactions with virtual environments, and evaluate user training --- 3D spatial anatomy learning --- associated with playing our game.   
+
+\begin{figure}[htb]
+      \centering
+      \includegraphics[width=0.70\columnwidth]{Figures/datasetDebut.png}
+      \caption{Presentation of the BodyParts3D anatomical dataset layers: \textbf{A)} BodyParts3D dataset (version 4.0) in its entirety; \textbf{B)} illustration of the integumentary system removed exposing the muscular system; \textbf{C)} skeletal, reproductive, gastro-intestinal (GI), and circulatory systems; \textbf{D)}  skeletal and circulatory systems and the liver; \textbf{E)} inner-most layer of the dataset --- the skeletal system \cite{messier2016interactive}.}
+      \label{fig:Dataset}
+\end{figure}
+
+%\skiplinehalf
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%METHODOLOGY
+%{\bf Methodology:}
+\section{Methodology}
+%\skiplinehalf
+%\noindent {\bf Insert here.}
+\subsection{Virtual Anatomy Puzzle Overview}
+In order to facilitate this interactive, educational curricula, we have developed a 3D anatomy puzzle prototype, which prompts the user to assemble various anatomical systems in a virtual environment. 
+
+The Virtual Anatomy Puzzle game is comprised of three functional modes. The first mode serves as a tutorial, familiarizing the user with the interface, hardware and controls. This tutorial consists of a series of alignment exercises using an asymmetrical singleton object, successively introducing the user to all of the degrees of freedom ultimately available in the full control scheme. By analyzing the collected metrics of speed, accuracy, and throughput from a users’ performance with the alignment exercises, we can evaluate a users’ motion interactions with virtual environments using a Fitts’ Law experiment \cite{raynal2013towards}. We can also supplement the user movements with tracked eye data, and evaluate their visual interactions with the virtual environment. 
+
+\begin{figure}[htb]
+      \centering
+      \includegraphics[width=0.96\columnwidth]{Figures/ThoraxAssembly.png}
+      \caption{Images of the rendered \textbf{thorax dataset} in the puzzle game. These images were taken in \textit{Free Play mode}. Highlighted in GREEN is the currently selected bone, the \textbf{Left Scapula}. \textbf{A)} shows the rendered thorax components placed in a circle around a randomly selected KEYSTONE, which in this case the keystone is the \textbf{10th thorasic vertebrae}. \textbf{B)} presents the \textbf{thorax} in the progress of being puzzled together. \textbf{C)} shows the completed puzzle of the \textbf{thorax dataset} \cite{messier2016interactive}.}
+      \label{fig:Thorax}
+\end{figure}
+
+The second mode is a so-called Free Play Mode, which allows unguided and unlimited manipulation and further exploration of the anatomical models, with annotations present on all objects. This exploratory free play is intended to strengthen user preparedness and familiarity with the task prior to any assessment or constraints. This is especially beneficial for those who embark upon the game with a limited knowledge base or little experience manipulating objects in a 3D virtual environment. Exploratory free play is a functionality common to similar, existing digital anatomical tools. 
+
+\begin{figure}[htb]
+      \centering
+      \includegraphics[width=0.96\columnwidth]{Figures/SkullAssembly.png}
+      \caption{Images of the rendered \textbf{Skull dataset} in the puzzle game. These images were taken in \textit{Free Play Mode}. Highlighted in GREEN is the currently selected bone, the \textbf{Left Parietal Bone}. \textbf{A)} shows the rendered skull components placed in a circle around a randomly selected keystone, which in this case the KEYSTONE is the \textbf{ethmoid bone}. \textbf{B)} presents the skull in the progress of being puzzled together. \textbf{C)} shows the completed puzzle of the \textbf{Skull dataset} \cite{messier2016interactive}.}
+      \label{fig:Skull}
+\end{figure}
+
+The assessment or “Quiz Mode” is a highly controlled and guided experience, which challenges the user to recall both the name and position of randomly selected pieces of the anatomical model in the fully completed assembly. The task begins by loading three “keystone” models at random, which are permanently grounded, meaning that the user cannot manipulate them. A selection of five additional models is subsequently loaded, and the user is prompted to select a one and attach it to the grounded assemblage. The user is given four attempts to maneuver the model into the proper position. Doing so will trigger a “snap” event, wherein the manipulated piece is successfully attached to the grounded model if it is within a certain tolerance of the correct position. If a correct solution has not been achieved in four attempts, the model is automatically snapped to the correct position and orientation. The game is based on point accumulation --- more attempts it takes for a user to make a successful ``snap'', the fewer points the user receives. Fig. \ref{fig:Thorax} and Fig. \ref{fig:Skull} show the task for our anatomy puzzle game in Free Play Mode, however the mechanics for Quiz Mode are very similar.
+%This puzzle assembly task is intended as the foundation upon which a useful pedagogical tool can be constructed. From this “Quiz Mode” we hope to evaluate the training a user experiences, with respect to 3D spatial anatomy, while playing our game. A user’s learning will be assessed based upon how many points the user receives.
+
+\subsection{Platform Architecture}
+
+\subsubsection{Hardware}
+3D imagery will be presented on a stereoscopic table-top display, constructed from a rear-projection screen stretched across a wooden frame. The frame is positioned parallel to the floor, and a BenQ projector capable of displaying frames at 120 Hz is positioned beneath, projecting upwards. The user is equipped with Volfoni active-shutter glasses --- which block alternating frames and allow for the stereoscopic illusion --- and a Wii remote controller, which allows the user to manually interact with the virtual environment. The viewer and controller are tracked using a Northern Digital Polaris Spectra tracking system. Small, retro-reflective spheres --- placed at the corners of the table, along the frame of the glasses, and along the controller --- allow the Spectra to track the position and orientation of the remote controller and the viewer’s head with respect to the table using infrared light pulsed at 60 Hz. The setup for our interactive stereoscopic tabletop is depicted in Fig. \ref{fig:Setup}.
+
+\begin{figure}[htb]
+      \centering
+      \includegraphics[width=0.49\columnwidth]{Figures/Setup.png}
+      \caption{This is a picture of the interactive, stereoscopic, reverse projection setup. A) shows a Vizard environment being rendered in an interlaced vertical 3D format at 120Hz onto the reverse projection screen. The BenQ projector lies beneath the projection screen. B) shows tracked retro-reflective spheres --- in the formation of a recognized rigid body object --- atop a tripod. C) shows the NDI Polaris Spectra tracking system.}
+      \label{fig:Setup}
+\end{figure}
+
+\subsubsection{Software}
+Our software platform was built using the WorldViz Vizard toolkit. The Vizard toolkit provides a framework for rapid prototyping of 3D applications, with ready-made interfaces for many of the commercially available virtual reality, motion capture, eye tracking, CAVE/Powerwall and 3D projection systems available today. While the Polaris Spectra tracking device is not directly supported, plug-ins for open-source servers, such as the Virtual Reality Peripheral Network (VRPN), are also included. VPRN and the associated Vizard plug-in facilitate communication between and control of the tracking device. However, due to a bug in the VRPN Polaris Spectra driver, the resulting position and orientation data are currently considered unusable. Until a solution is found, we have written a script to parse the log file generated by Northern Digital’s own sample API executable. To test for the effectiveness  of our implementation of the NDI Polaris Spectra API in Vizard we compared the tracking accuracy between our method and the VRPN method for communication with the Polaris. This experiment will be elaborated upon below.
+
+\subsection{Testing Procedure}
+In order to evaluate the performance of the tracking device, we attached one of the rigid body tools supplied with the Spectra to a tripod and recorded the tool’s position at different distances from the device. The tools supplied with the Polaris Spectra are adorned with small, retro-reflective spheres, which the device can image using pulsed infrared light. Physical dimensions of each tool are predefined in software definition files, which the device uses to identify and calculate each rigid body’s position and orientation.
+
+\begin{figure}[htb]
+      \centering
+      \includegraphics[width=0.49\columnwidth]{Figures/Experiment.png}
+      \caption{Image of tracking accuracy experiment. A) shows the static NDI Polaris Spectra. B) shows the mobile tracked rigid body atop a tripod that is being moved to 1 m away from its starting position from the Polaris at 10 cm increments along the Z-axis.}
+      \label{Exp}
+\end{figure}
+
+The tripod was initially placed 1 meter away from the Spectra, which is the minimum detection distance reported in the device specifications. Both the VRPN and NDI applications were used to interface with the tracker, and the position reported by each was recorded for the starting position. This process was repeated for ten subsequent displacements, each measuring 10 centimeters further along the axis normal to the device as shown in Fig. \ref{Exp}. 
+
+%
+
+
+%
+%\skiplinehalf
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%RESULTS
+%{\bf Results:}
+\section{Results}
+
+\begin{figure}[htb]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \includegraphics[width=\textwidth]{Figures/DisplacementX.png}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.49\textwidth}
+        \includegraphics[width=\textwidth]{Figures/DisplacementY.png}
+		\end{subfigure}
+		~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+		\begin{subfigure}[c]{0.55\textwidth}
+				\includegraphics[width=\textwidth]{Figures/DisplacementZ.png}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+
+    \caption{Position Tracking accuracy comparison between NDI API and VRPN data acquisition and control methods. A) shows tracked displacement along the X-axis. B) shows tracked displacement along the Y-axis. C) shows tracked displacement along the Z-axis. In this accuracy test, the tracked object recognized by the Polaris Spectra was only displaced in the Z-axis direction, with minor deviations along the X-axis, and fixed position along the Y-axis.}
+		\label{Disp}
+\end{figure}
+
+Because this was a comparison between software interfaces for the device, and not of different tracking devices or techniques, the numbers should theoretically match. However, VRPN reports markedly different numbers than the NDI application. The magnitude of the displacement reported by each was different, as VRPN reports position in units of meters while NDI uses millimeters. However, the results output by VRPN do not even demonstrate a consistent trend and are seemingly restricted to a range of 0 to 1.  Additionally, the positions reported by the NDI application used a negative sign convention, which was not seen in the VPRN numbers. There are small deviations in the X and Y axis measurements reported by the NDI interface, but this is due to the displacement not being perfectly limited to the Z axis.
+
+In its current state, the VPRN server reports positional data that is unreliable and seemingly uncorrelated with real-world movement as shows in Fig. \ref{Disp}. Our current working theory is that the VRPN software suffers from a parsing or sync issue, which causes this erratic tracking. Until such time that the bug can be identified and fixed, we will rely on our script for parsing the log file generated by NDI’s program.
+
+%\skiplinehalf 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%CONCLUSIONS
+%{\bf Conclusions:}
+\section{New or Breakthrough Work to Be Presented}
+%\skiplinehalf
+In this paper we describe the implementation and evaluation of an stereoscopic table-top 3D visualization system that enables users to explore and interact with virtual models of the anatomy using a tracked Wii remote while the pose of the images object is updated according to the user's view point. In the full version of the paper we will demonstrate the functionality of the system in the context of a user interacting with several virtual displays while accomplishing several visual and motor tasks. We will evaluate the system's performance in terms of the user's capabilities to accomplish the required tasks using the well-known NASA Task-Loax Index (TLX) scale.
+
+%\skiplinehalf 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%CONCLUSIONS
+%{\bf Conclusions:}
+\section{Conclusions and Future Work}
+%\skiplinehalf
+In its current form, our project has all of the necessary hardware and software pieces available, everything now just needs to be joined together. In our previous version of the developed software, we made our anatomy puzzle game platform easily extendable, and it has already been built to accommodate 3D interlaced vertical rendering. 
+
+To achieve the objectives described here, we will integrate the tracking system into the puzzle game, which will enable us to track the gaze of the user in order to accommodate multiple-viewing-angles, the Wii remote controller such that the user can manually interact with the virtual environment, and the reverse projection screen to serve as a reference point for the real-to-virtual world.
+
+Once we have all of the new hardware has been properly integrated, we will continue our study, since all of our user interface tasks have already been completed. In our study we hope to contribute to complementing the work of others on user interactions with virtual environments and 3D spatial-recognition training associated with learning in virtual environments. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% References %%%%%
+%
+\bibliography{EM_SPIE_2016_Bibliography}   %>>>> bibliography data in report.bib
+\bibliographystyle{spiebib}   %>>>> makes bibtex use spiebib.bst
+
+\end{document} 

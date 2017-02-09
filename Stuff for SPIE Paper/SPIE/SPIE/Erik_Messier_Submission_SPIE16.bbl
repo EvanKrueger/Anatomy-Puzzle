@@ -1,0 +1,45 @@
+\begin{thebibliography}{1}
+
+\bibitem{kang2014stereoscopic}
+X.~Kang, M.~Azizian, E.~Wilson, K.~Wu, A.~D. Martin, T.~D. Kane, C.~A. Peters,
+  K.~Cleary, and R.~Shekhar, ``Stereoscopic augmented reality for laparoscopic
+  surgery,'' {\em Surgical endoscopy} {\bf 28}(7), pp.~2227--2235, 2014.
+
+\bibitem{chan2013virtual}
+S.~Chan, F.~Conti, K.~Salisbury, and N.~H. Blevins, ``Virtual reality
+  simulation in neurosurgery: technologies and evolution,'' {\em Neurosurgery}
+  {\bf 72}, pp.~A154--A164, 2013.
+
+\bibitem{nam2012application}
+K.~W. Nam, J.~Park, I.~Y. Kim, and K.~G. Kim, ``Application of stereo-imaging
+  technology to medical field,'' {\em Healthcare informatics research} {\bf
+  18}(3), pp.~158--163, 2012.
+
+\bibitem{vaapenstad2013procedural}
+C.~V{\aa}penstad and S.~N. Buzink, ``Procedural virtual reality simulation in
+  minimally invasive surgery,'' {\em Surgical endoscopy} {\bf 27}(2),
+  pp.~364--377, 2013.
+
+\bibitem{marescaux1998virtual}
+J.~Marescaux, J.-M. Cl{\'e}ment, V.~Tassetti, C.~Koehl, S.~Cotin, Y.~Russier,
+  D.~Mutter, H.~Delingette, and N.~Ayache, ``Virtual reality applied to hepatic
+  surgery simulation: the next revolution.,'' {\em Annals of surgery} {\bf
+  228}(5), p.~627, 1998.
+
+\bibitem{messier2016interactive}
+E.~MESSIER, J.~WILCOX, A.~DAWSON-ELLI, G.~DIAZ, and C.~Linte, ``An interactive
+  3d virtual anatomy puzzle for learning and simulation—initial demonstration
+  and evaluation,'' {\em Medicine Meets Virtual Reality 22: NextMed/MMVR22}
+  {\bf 220}, p.~233, 2016.
+
+\bibitem{brewer2012evaluation}
+D.~N. Brewer, T.~D. Wilson, R.~Eagleson, and S.~de~Ribaupierre, ``Evaluation of
+  neuroanatomical training using a 3d visual reality model.,'' in {\em MMVR},
+  pp.~85--91, 2012.
+
+\bibitem{raynal2013towards}
+M.~Raynal, E.~Dubois, and B.~Schmitt, ``Towards unification for pointing task
+  evaluation in 3d desktop virtual environment,'' in {\em Human Factors in
+  Computing and Informatics},  pp.~562--580, Springer, 2013.
+
+\end{thebibliography}
