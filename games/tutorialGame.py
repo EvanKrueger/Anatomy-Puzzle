@@ -289,6 +289,7 @@ class InterfaceTutorial(object):
 #		randomPos = [1*(random.random()-0.5),abs(1*(random.random()-0.5)),2*(random.random()-0.5)]
 #		randomEuler = [random.randint(-90,90),random.randint(-90,90),random.randint(-90,90)]
 		randomPos, randomEuler = self.moveFunc()
+		print '\t',randomPos, '\t',randomEuler,'\n'
 		
 		#CHANGE RESULT TO TRIAL TYPE
 		self.recordData.event(event = self.trial, result = 'MOVE SOMEWHERE AND SOMETHING', x = randomPos[0], y = randomPos[1], z = randomPos[2])
