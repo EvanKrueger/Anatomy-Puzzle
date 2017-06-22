@@ -1405,7 +1405,7 @@ class PuzzleScore():
 	def __init__(self, modeName):
 		"""Init score datastructure, open up csv file"""
 		self.startTime = datetime.datetime.now()
-		self.scoreFile = open('.\\log\\'+ modeName + '\\' + self.startTime.strftime('%m%d%Y_%H%M%S') + '.csv', 'wb')
+		self.scoreFile = open('.\\log\\'+ modeName + '\\' + self.startTime.strftime('%m%d%Y_%H%M%S') + '.csv', 'wb+')
 		self.csv = csv.writer(self.scoreFile)
 		
 		# Starting score

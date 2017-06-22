@@ -1,6 +1,4 @@
-﻿
-
-"""
+﻿"""
 STEREOSCOPIC ANATOMY GAME
 
 Originally started as a senior design project for the 2014-2015 academic year.
@@ -19,16 +17,12 @@ import config
 import anatomyTrainer
 import menu
 
-
-
-
 def main():
 	
 	try:
 		#Prompt for init config parameters
-		configurations = menu.modalityGUI()\
-		
-		
+		configurations = menu.modalityGUI()
+	
 		#Handling configuration selections
 		with open('.\\dataset\\configurations\\configurations.json','rb') as f:
 			configurations = json.load(f)
