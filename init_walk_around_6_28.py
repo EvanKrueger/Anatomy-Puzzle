@@ -1,4 +1,8 @@
-﻿""" 
+﻿"""
+Another copy of init to create mouse and keyboard walk around view
+"""
+
+""" 
 init.py
 
 The purpose of this file is to organize all of the input and
@@ -12,6 +16,7 @@ import math
 # Vizard modules
 import viz
 import vizact
+import vizcam
 import vizshape
 import viztask
 import vizproximity
@@ -249,7 +254,7 @@ class DisplayInstance():
 			# Use the arrow keys to move
 			self.camcenter = viz.addChild('ball.wrl')
 			self.camcenter.setPosition(0,1.4,0)
-			self.pointer.setParent(self.camcenter) # This is where pointer is parented to camera view
+#			self.pointer.setParent(model.viz.mouse) ### here? # This is where pointer is parented to camera view
 			self.camcenter.disable(viz.RENDERING)
 		
 	#		#occulus Rift enabled
@@ -284,14 +289,23 @@ class DisplayInstance():
 #			viztask.schedule(controlScheme.performKeyMovements(self.camcenter, camlink))
 #			viztask.schedule(controlScheme.cameraFocus(self.camcenter, camlink))		
 			
+			# Setup keyboard/mouse tracker ### here? (below)
+			tracker = vizcam.addWalkNavigate(moveScale=2.0)
+			tracker.setPosition([0,1.8,0], viz.ABS_LOCAL)
+			viz.link(tracker,viz.MainView)
+			viz.mouse(viz.ON)
+			viz.mouse.setOverride(viz.ON)
+			self.pointer.setParent(viz.SCREEN) # Turn on mouse navigation #tried turning on, didn't work
+
+			
 			#backup control functions:
-			vizact.whilekeydown(viz.KEY_RIGHT,self.camcenter.setEuler,[vizact.elapsed(90),0,0],viz.REL_GLOBAL)
-			vizact.whilekeydown(viz.KEY_LEFT,self.camcenter.setEuler,[vizact.elapsed(-90),0,0],viz.REL_GLOBAL)
-			vizact.whilekeydown(viz.KEY_UP,self.camcenter.setEuler,[0,vizact.elapsed(-90),0],viz.REL_LOCAL)
-			vizact.whilekeydown(viz.KEY_DOWN,self.camcenter.setEuler,[0,vizact.elapsed(90),0],viz.REL_LOCAL)
-			vizact.whilekeydown( 't' , self.camcenter.setPosition,[0,0,vizact.elapsed(4)],viz.REL_LOCAL)
-			vizact.whilekeydown( 'g' ,  self.camcenter.setPosition,[0,0,vizact.elapsed(-4)],viz.REL_LOCAL)
-		
+#			vizact.whilekeydown(viz.KEY_RIGHT,self.camcenter.setEuler,[vizact.elapsed(90),0,0],viz.REL_GLOBAL)
+#			vizact.whilekeydown(viz.KEY_LEFT,self.camcenter.setEuler,[vizact.elapsed(-90),0,0],viz.REL_GLOBAL)
+#			vizact.whilekeydown(viz.KEY_UP,self.camcenter.setEuler,[0,vizact.elapsed(-90),0],viz.REL_LOCAL)
+#			vizact.whilekeydown(viz.KEY_DOWN,self.camcenter.setEuler,[0,vizact.elapsed(90),0],viz.REL_LOCAL)
+#			vizact.whilekeydown( 't' , self.camcenter.setPosition,[0,0,vizact.elapsed(4)],viz.REL_LOCAL)
+#			vizact.whilekeydown( 'g' ,  self.camcenter.setPosition,[0,0,vizact.elapsed(-4)],viz.REL_LOCAL)
+#		
 		
 			default = self.camcenter.getPosition()
 
@@ -368,7 +382,7 @@ def pointerInput(mode, pointer, arena):
 	theTarget = vizproximity.Target(pointer)
 	
 # the pointer
-	pointer.setPosition([.4,-.4,-.7], viz.REL_LOCAL) # Alison: Place pointer in position where it is viz-able (ha puns) to the viewer	
+	pointer.setPosition([0,1.8,-.2], viz.REL_PARENT) # Alison: Place pointer in position where it is viz-able (ha puns) to the viewer	
 	
 #	proxy.addSensor(theSensor)
 	proxy.addTarget(theTarget)
@@ -387,13 +401,14 @@ def pointerInput(mode, pointer, arena):
 		#fixedRotation.setMask(viz.LINK_ORI)
 		
 		speed = 3.0
-		vizact.whilekeydown('w',pointer.setPosition,[0,vizact.elapsed(speed),0],viz.REL_LOCAL)
-		vizact.whilekeydown('x',pointer.setPosition,[0,vizact.elapsed(-speed),0],viz.REL_LOCAL)
-		vizact.whilekeydown('d',pointer.setPosition,[vizact.elapsed(speed),0,0],viz.REL_LOCAL)
-		vizact.whilekeydown('a',pointer.setPosition,[vizact.elapsed(-speed),0,0],viz.REL_LOCAL)
-		vizact.whilekeydown('e',pointer.setPosition,[0,0,vizact.elapsed(speed)],viz.REL_LOCAL)
-		vizact.whilekeydown('z',pointer.setPosition,[0,0,vizact.elapsed(-speed)],viz.REL_LOCAL)
-		
+#
+#		vizact.whilekeydown('w',pointer.setPosition,[0,vizact.elapsed(speed),0],viz.REL_LOCAL)
+#		vizact.whilekeydown('x',pointer.setPosition,[0,vizact.elapsed(-speed),0],viz.REL_LOCAL)
+#		vizact.whilekeydown('d',pointer.setPosition,[vizact.elapsed(speed),0,0],viz.REL_LOCAL)
+#		vizact.whilekeydown('a',pointer.setPosition,[vizact.elapsed(-speed),0,0],viz.REL_LOCAL)
+#		vizact.whilekeydown('e',pointer.setPosition,[0,0,vizact.elapsed(speed)],viz.REL_LOCAL)
+#		vizact.whilekeydown('z',pointer.setPosition,[0,0,vizact.elapsed(-speed)],viz.REL_LOCAL)
+#		
 	elif mode == 1:
 		# Set up pointer control with the Spacemouse
 		connexion = viz.add('3dconnexion.dle')

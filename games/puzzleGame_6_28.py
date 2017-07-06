@@ -1,4 +1,6 @@
-﻿"""
+﻿# Puzzle Game copy 6/29
+
+"""
 Controller components of the Puzzle game
 """
 
@@ -16,7 +18,7 @@ import time, datetime
 import threading
 
 # Custom modules
-import init_walk_around_6_28
+import init_splitscreen_6_28
 import menu
 import config
 import model
@@ -514,7 +516,7 @@ class PuzzleController(object):
 				
 			else:
 				target.setGroupParent()
-				self._gloveLink = viz.grab(model.pointer, target, viz.ABS_GLOBAL)
+				self._gloveLink = viz.grab(viz.mouse , target, viz.ABS_GLOBAL)
 				self.score.event(event = 'grab', description = 'Grabbed bone', source = target.name)
 #				self.transparency(target, 0.7)
 				target.highlight(grabbed = True)

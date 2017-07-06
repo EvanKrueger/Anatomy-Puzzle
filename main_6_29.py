@@ -1,4 +1,9 @@
-﻿"""
+﻿# Copy of main to work with Walk Around Mode
+
+
+
+
+"""
 STEREOSCOPIC ANATOMY GAME
 
 Originally started as a senior design project for the 2014-2015 academic year.
@@ -14,7 +19,7 @@ import json
 
 # Custom modules
 import config  
-import anatomyTrainer
+import anatomyTrainer_6_29
 import menu
 
 def main():
@@ -33,7 +38,7 @@ def main():
 		if proceedFromConfigGUI:
 		
 			#Initialize puzzle game
-			anatomyTrainer.start()
+			anatomyTrainer_6_29.start()
 	except:
 		raise
 		

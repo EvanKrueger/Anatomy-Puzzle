@@ -1,4 +1,6 @@
-﻿# Builtin
+﻿# Tutorial Game COPY 6/29
+
+# Builtin
 import csv
 import time, datetime
 import random
@@ -18,12 +20,12 @@ import datetime
 import random
 
 #custom
-import init_walk_around_6_28
+import init_splitscreen_6_28
 import menu
 import config
 import model
-import menu
-		
+#import menu
+#		
 class InterfaceTutorial(object):
 	"""
 	This game mode is intended to instruct novice users in the use of the SpaceMouse
@@ -52,8 +54,10 @@ class InterfaceTutorial(object):
 		self.origPosVec = config.SMPositionScale
 		self.origOrienVec = config.SMEulerScale
 		
-		#creating directions panel
-#		viz.mouse.setVisible(False)
+
+		viz.mouse.setOverride(viz.ON)
+		
+		
 #		directions = vizinfo.InfoPanel('', fontSize = 10, parent = canvas, align = viz.ALIGN_LEFT_TOP, title = 'Tutorial', icon = False)
 #		if config.pointerMode ==0:
 #			directions.addItem(viz.addText('Keyboard Controls:'))
@@ -177,7 +181,7 @@ class InterfaceTutorial(object):
 		self.outlineCenter.remove()
 		self.dogTargetMold.remove()
 		self.iterations = 0
-		model.pointer.setParent(model.display.camcenter)
+		model.pointer.setParent(model.display.camcenter) ### here?
 		self.proxList = []
 		self.gloveLink = None
 		config.SMEulerScale = self.origOrienVec
@@ -191,8 +195,8 @@ class InterfaceTutorial(object):
 		before preforming the next action."""
 		if self.iterations ==0:
 			#setting conditions for position transformations along single axis
-#			model.pointer.setParent(viz.WORLD)
-#			model.pointer.setPosition((0,0,0.5),viz.ABS_LOCAL) # Not sure why I put this here when it is above
+			model.pointer.setParent(viz.REL_LOCAL) ## here?
+			model.pointer.setPosition((0,0,0.5),viz.ABS_LOCAL) # Not sure why I put this here when it is above
 			config.SMEulerScale = [0,0,0]
 			self.proxList.append(self.dogCenter)
 	

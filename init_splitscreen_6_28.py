@@ -1,4 +1,6 @@
-﻿""" 
+﻿# init_6_28
+
+""" 
 init.py
 
 The purpose of this file is to organize all of the input and
@@ -13,6 +15,8 @@ import math
 import viz
 import vizact
 import vizshape
+import vizcave # Alison: Added
+import vizcam # Alison: Added
 import viztask
 import vizproximity
 import oculus
@@ -209,6 +213,61 @@ class DisplayInstance():
 			viz.window.setFullscreenMonitor(1)
 #			viz.go(viz.FULLSCREEN) #viz.FULLSCREEN
 
+	# Alison: Split screen mode
+					# Adds additional Camera Views
+			def splitScreen():
+				while True:
+						yield viztask.waitAll( [viztask.waitKeyDown(' '), viztask.waitTime(1) ] )
+						# Normal View
+						viewNorm = viz.addView()
+					# View from left
+						viewLeft = viz.addView() 
+						viewLeft.setPosition(4,1.4,0)
+						viewLeft.setEuler(-90,0,0)
+					# View from rear
+						viewRear = viz.addView ()
+						viewRear.setPosition(0,1.4,3)
+						viewRear.setEuler(180,0,0)
+		
+		# Add additional Windows
+					# Left window
+						Left = viz.addWindow()
+						Left.setSize([0.5,0.5])
+						Left.setPosition([0.5,1])
+					# Rear window
+						Rear = viz.addWindow()
+						Rear.setSize([0.5,0.5])
+						Rear.setPosition([0.5,0.5])
+					# Normal window
+						Norm = viz.addWindow()
+						Norm.setSize([0.5,1])
+						Norm.setPosition([0,1])
+				
+					# Assign views to windows
+						Norm.setView(viz.MainView)
+						Left.setView(viewLeft)
+						Rear.setView(viewRear)
+			viztask.schedule(splitScreen() )
+		
+		
+			# Set main window to be half the screen
+			# viz.MainWindow.setSize([0.5,1]) # Alison: First window view
+			
+			
+#			#Set the size and position of the window.
+##			fixedCamWindow.setSize([0.5, 1])
+#			TopCamWindow.setSize(viz.MainWindow.getSize()[0]/2)
+#			TopCamWindow.setPosition([0, 1])
+#			RearCamWindow.setPosition([1, 0])
+
+#
+#			#Assign the new view to the new window.
+#			TopCamWindow.setView( TopCamView )
+#			TopCamView.setPosition([0,7,0])
+#			TopCamView.setEuler([0,90,0])	
+			
+#			RearCamWindow.
+
 		elif self.displayMode == 1:
 			viz.setMultiSample(4)
 			viz.go(viz.STEREO_HORZ | viz.FULLSCREEN)
@@ -231,11 +290,47 @@ class DisplayInstance():
 			viz.fov(60)
 			viz.go(viz.FULLSCREEN) #viz.FULLSCREEN
 			viz.window.setFullscreenMonitor(2)
-
+		
+#		elif self.displayMode == 4: # Alison: Split screen mode
+#					# Add additional Camera Views	
+#			# Normal View
+#			viewNorm = viz.addView()
+#			# View from left
+#			viewLeft = viz.addView() 
+#			viewLeft.setPosition(4,1.4,0)
+#			viewLeft.setEuler(-90,0,0)
+#			# View from rear
+#			viewRear = viz.addView ()
+#			viewRear.setPosition(0,1.4,3)
+#			viewRear.setEuler(180,0,0)
+#			
+#	# Add additional Windows
+#			# Left window
+#			Left = viz.addWindow()
+#			Left.setSize([0.5,0.5])
+#			Left.setPosition([0.5,1])
+#			# Rear window
+#			Rear = viz.addWindow()
+#			Rear.setSize([0.5,0.5])
+#			Rear.setPosition([0.5,0.5])
+#			# Normal window
+#			Norm = viz.addWindow()
+#			Norm.setSize([0.5,1])
+#			Norm.setPosition([0,1])
+#	
+#		# Assign views to windows
+#			Norm.setView(viz.MainView)
+#			Left.setView(viewLeft)
+#			Rear.setView(viewRear)
+#						
 		# Initial direction of main view
 		viz.MainView.setEuler([0,0,0])
 		viz.MainView.setPosition([0,0,-3], viz.ABS_GLOBAL)
 	
+		
+			
+	
+
 	def cameraInput(self):
 		"""
 		Initialize the camera movement controls
@@ -247,9 +342,9 @@ class DisplayInstance():
 		"""
 		if self.camMode == 0:
 			# Use the arrow keys to move
-			self.camcenter = viz.addChild('ball.wrl')
+			self.camcenter = viz.addChild('ball.wrl') 
 			self.camcenter.setPosition(0,1.4,0)
-			self.pointer.setParent(self.camcenter) # This is where pointer is parented to camera view
+			self.pointer.setParent(self.camcenter) # Alison: This is where pointer is parented to camera view
 			self.camcenter.disable(viz.RENDERING)
 		
 	#		#occulus Rift enabled

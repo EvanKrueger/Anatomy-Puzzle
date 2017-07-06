@@ -20,7 +20,7 @@ import viztask
 # Custom modules
 import config
 import model
-import anatomyTrainer
+import anatomyTrainer_6_29
 
 class MenuController(object):
 	def __init__(self):

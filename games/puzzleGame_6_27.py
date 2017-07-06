@@ -1,4 +1,9 @@
-﻿"""
+﻿""" 
+6/27/17 version of Puzzle Game 
+Copied and pasted from original puzzleGame.py 
+"""
+
+"""
 Controller components of the Puzzle game
 """
 
@@ -16,7 +21,7 @@ import time, datetime
 import threading
 
 # Custom modules
-import init_walk_around_6_28
+import init_6_27
 import menu
 import config
 import model
@@ -59,7 +64,7 @@ class PuzzleController(object):
 		
 		self._pointerTexture	= model.pointer.getTexture()
 		self._pointerOrigColor	= model.pointer.getColor()
-		model.pointer.setPosition([.4,-.4,.7], viz.REL_LOCAL) # Alison: Place pointer in position where it is viz-able (ha puns) to the viewer
+		model.pointer.setPosition([.4,-.4,-.7], viz.REL_LOCAL) # Alison: Place pointer in position where it is viz-able (ha puns) to the viewer
 		
 #		self.viewcube = puzzleView.viewCube()
 		
@@ -797,7 +802,7 @@ class FreePlay(PuzzleController):
 		self.bindKeys()
 		
 		# Pointer Position # Alison: Added
-		model.pointer.setPosition((.4,-.4,.7), viz.REL_PARENT) # Alison: Place pointer in position where it is viz-able (ha puns) to the viewer
+#		model.pointer.setPosition([.4,-.4,-.7], viz.REL_LOCAL) # Alison: Place pointer in position where it is viz-able (ha puns) to the viewer
 
 		self.score = PuzzleScore(self.modeName)
 		

@@ -1,4 +1,9 @@
 ﻿""" 
+This is a copy created on 6/27/17
+Copied and pasted from original file, init.py 
+"""
+
+""" 
 init.py
 
 The purpose of this file is to organize all of the input and
@@ -176,7 +181,7 @@ class CameraKeyboardControl(viz.EventClass):
 				#move down
 				elif self.down == True:
 					#check if this move made us go through the floor
-					if mainView.getPosition(viz.ABS_GLOBAL)[1] < 0: # y axis negative?
+					if mainView.getPosition(viz.ABS_GLOBAL)[1] < 0: # y axis negative? # Alison: This is where we want to prevent from going through floor
 						pass
 					else: # mainview above floor
 						camcenter.setEuler([0,-1.5,0] , viz.REL_LOCAL)
@@ -249,7 +254,7 @@ class DisplayInstance():
 			# Use the arrow keys to move
 			self.camcenter = viz.addChild('ball.wrl')
 			self.camcenter.setPosition(0,1.4,0)
-			self.pointer.setParent(self.camcenter) # This is where pointer is parented to camera view
+			#self.pointer.setParent(self.camcenter) # Alison: I think this is where the pointer is linked to camera
 			self.camcenter.disable(viz.RENDERING)
 		
 	#		#occulus Rift enabled
@@ -317,7 +322,7 @@ class DisplayInstance():
 		else:
 			raise ValueError('Invaid control mode selection')
 		
-def onCollide(e):
+def onCollide(e): # (Alison: I don't think this line is working, I didn't add this line)
 	print("collision")
 	pointer.setVelocity([0,0,0],viz.ABS_GLOBAL)
 
@@ -383,8 +388,8 @@ def pointerInput(mode, pointer, arena):
 		
 		#For keyboard controls the glove is only linked via orientation
 		#linking via position was causing issues with the camera focusing feature
-		#fixedRotation = viz.link(viz.MainView,pointer)
-		#fixedRotation.setMask(viz.LINK_ORI)
+		#fixedRotation = viz.link(viz.MainView,pointer) 
+		#fixedRotation.setMask(viz.LINK_ORI) # Alison: Un-commented this line
 		
 		speed = 3.0
 		vizact.whilekeydown('w',pointer.setPosition,[0,vizact.elapsed(speed),0],viz.REL_LOCAL)
