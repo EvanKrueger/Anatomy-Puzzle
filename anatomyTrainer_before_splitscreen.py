@@ -1,6 +1,4 @@
-﻿# Anatomy Trainer copy 6/29
-
-"""
+﻿"""
 Primary file from which the Anatomy Trainer game is run.
 """
 
@@ -11,7 +9,7 @@ import vizact, vizshape, viztask
 # Custom modules
 import model
 import menu
-import init_splitscreen_6_28
+import init
 import config
 
 def start():
@@ -22,15 +20,12 @@ def start():
 	viz.phys.enable()
 
 	### Initialize pointer tool
-	
-	model.pointer = viz.addChild('.\\dataset\\Hand\\handPoint_reduced.ply') # Added parent thing here
+	model.pointer = viz.addChild('.\\dataset\\Hand\\handPoint_reduced.ply')
 	pointer = model.pointer
 	
 	pointer.setScale(0.012, 0.012, 0.012)
-#	pointer.setParent() # What do I want here
 	pointer.setEuler(0, -115, 0)
 	pointer.disable([viz.PHYSICS, viz.DYNAMICS])
-	
 	
 #	### Alpha slice plane setup
 #	viz.startLayer(viz.POINTS)
@@ -60,9 +55,9 @@ def start():
 	lights[1].intensity(0.3)
 	
 	# Initialize pointer controls
-	device = init_splitscreen_6_28.pointerInput(config.pointerMode, pointer, sky)
+	device = init.pointerInput(config.pointerMode, pointer, sky)
 	### Initialize display
-	model.display = init_splitscreen_6_28.DisplayInstance(config.dispMode,config.camMode,device,pointer)
+	model.display = init.DisplayInstance(config.dispMode,config.camMode,device,pointer)
 	
 	### Launch menu system
 	model.menu = menu.MenuController()

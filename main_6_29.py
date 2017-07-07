@@ -19,7 +19,7 @@ import json
 
 # Custom modules
 import config  
-import anatomyTrainer_6_29
+import anatomyTrainer
 import menu
 
 def main():
@@ -38,7 +38,7 @@ def main():
 		if proceedFromConfigGUI:
 		
 			#Initialize puzzle game
-			anatomyTrainer_6_29.start()
+			anatomyTrainer.start()
 	except:
 		raise
 		
