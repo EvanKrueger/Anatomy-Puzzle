@@ -213,77 +213,7 @@ class DisplayInstance():
 			viz.window.setFullscreenMonitor(1)
 #			viz.go(viz.FULLSCREEN) #viz.FULLSCREEN
 
-	# Alison: Split screen mode
-					# Adds additional Camera Views
-			def splitScreen():
-				while True:
-						yield viztask.waitAll( [viztask.waitKeyDown(' '), viztask.waitTime(1) ] )
-						# Normal View
-						viewNorm = viz.addView()
-					# View from left
-						viewLeft = viz.addView() 
-						viewLeft.setPosition(4,1.4,0)
-						viewLeft.setEuler(-90,0,0)
-					# View from rear
-						viewRear = viz.addView ()
-						viewRear.setPosition(0,1.4,3)
-						viewRear.setEuler(180,0,0)
-		
-		# Add additional Windows
-					# Left window
-						Left = viz.addWindow()
-						Left.setSize([0.5,0.5])
-						Left.setPosition([0.5,1])
-					# Rear window
-						Rear = viz.addWindow()
-						Rear.setSize([0.5,0.5])
-						Rear.setPosition([0.5,0.5])
-					# Normal window
-						Norm = viz.addWindow()
-						Norm.setSize([0.5,1])
-						Norm.setPosition([0,1])
 				
-					# Assign views to windows
-						Norm.setView(viz.MainView)
-						Left.setView(viewLeft)
-						Rear.setView(viewRear)
-			viztask.schedule(splitScreen() )			
-			
-			def endSplitScreen(): # Alison: Attempt at escaping split screen view (might have to just redefine viewNorm
-				while True:
-					yield viztask.waitAll([viztask.waitKeyDown('-'), viztask.waitTime(1) ] )
-					# Normal View
-					viewNorm = viz.addView()
-					# View from left
-					viewLeft = viz.addView() 
-					viewLeft.setPosition(4,1.4,0)
-					viewLeft.setEuler(-90,0,0)
-					# View from rear
-					viewRear = viz.addView ()
-					viewRear.setPosition(0,1.4,3)
-					viewRear.setEuler(180,0,0)
-		
-		# Add (non-existent) additional Windows
-					# Left window
-					Left = viz.addWindow()
-					Left.setSize([0,0])
-					Left.setPosition([0.5,1])
-					# Rear window
-					Rear = viz.addWindow()
-					Rear.setSize([0,0])
-					Rear.setPosition([0.5,0.5])
-					# Normal window
-					Norm = viz.addWindow()
-					Norm.setSize([1,1])
-					Norm.setPosition([0,1])
-				
-					# Assign views to windows
-					Norm.setView(viz.MainView)
-					Left.setView(viewLeft)
-					Rear.setView(viewRear)
-					
-			viztask.schedule(endSplitScreen() )
-			
 		
 			# Set main window to be half the screen
 			# viz.MainWindow.setSize([0.5,1]) # Alison: First window view
@@ -415,10 +345,10 @@ class DisplayInstance():
 #			viztask.schedule(controlScheme.cameraFocus(self.camcenter, camlink))		
 			
 			#backup control functions:
-			vizact.whilekeydown(viz.KEY_RIGHT,self.camcenter.setEuler,[vizact.elapsed(90),0,0],viz.REL_GLOBAL)
-			vizact.whilekeydown(viz.KEY_LEFT,self.camcenter.setEuler,[vizact.elapsed(-90),0,0],viz.REL_GLOBAL)
-			vizact.whilekeydown(viz.KEY_UP,self.camcenter.setEuler,[0,vizact.elapsed(-90),0],viz.REL_LOCAL)
-			vizact.whilekeydown(viz.KEY_DOWN,self.camcenter.setEuler,[0,vizact.elapsed(90),0],viz.REL_LOCAL)
+#			vizact.whilekeydown(viz.KEY_RIGHT,self.camcenter.setEuler,[vizact.elapsed(90),0,0],viz.REL_GLOBAL)
+#			vizact.whilekeydown(viz.KEY_LEFT,self.camcenter.setEuler,[vizact.elapsed(-90),0,0],viz.REL_GLOBAL)
+#			vizact.whilekeydown(viz.KEY_UP,self.camcenter.setEuler,[0,vizact.elapsed(-90),0],viz.REL_LOCAL)
+#			vizact.whilekeydown(viz.KEY_DOWN,self.camcenter.setEuler,[0,vizact.elapsed(90),0],viz.REL_LOCAL)
 			vizact.whilekeydown( 't' , self.camcenter.setPosition,[0,0,vizact.elapsed(4)],viz.REL_LOCAL)
 			vizact.whilekeydown( 'g' ,  self.camcenter.setPosition,[0,0,vizact.elapsed(-4)],viz.REL_LOCAL)
 		
@@ -503,7 +433,7 @@ def pointerInput(mode, pointer, arena):
 #	proxy.addSensor(theSensor)
 	proxy.addTarget(theTarget)
 		
-	vizact.onkeydown('l',pointer.setPosition,[0,1,0])
+	vizact.onkeydown('l',pointer.setPosition,[.4,-.4,-.7])
 	vizact.onkeydown('l',pointer.setVelocity,[0,0,0])	
 	vizact.onkeydown('l',pointer.setAngularVelocity,[0,0,0])
 	
@@ -525,12 +455,12 @@ def pointerInput(mode, pointer, arena):
 		vizact.whilekeydown('z',pointer.setPosition,[0,0,vizact.elapsed(-speed)],viz.REL_LOCAL)
 		
 		# Adjust pointer orientation (euler)
-		vizact.whilekeydown(viz.KEY_RIGHT,pointer.setEuler,[vizact.elapsed(90),0,0],viz.REL_GLOBAL)
-		vizact.whilekeydown(viz.KEY_LEFT,pointer.setEuler,[vizact.elapsed(-90),0,0],viz.REL_GLOBAL)
-		vizact.whilekeydown(viz.KEY_UP,pointer.setEuler,[0,vizact.elapsed(-90),0],viz.REL_LOCAL)
-		vizact.whilekeydown(viz.KEY_DOWN,pointer.setEuler,[0,vizact.elapsed(90),0],viz.REL_LOCAL)
-		
-		
+		vizact.whilekeydown(viz.KEY_RIGHT,pointer.setEuler,[0,0, vizact.elapsed(90)],viz.REL_LOCAL)
+		vizact.whilekeydown(viz.KEY_LEFT,pointer.setEuler,[0,0,vizact.elapsed(-90)],viz.REL_LOCAL)
+		vizact.whilekeydown(viz.KEY_UP,pointer.setEuler,[0,vizact.elapsed(90),0],viz.REL_LOCAL)
+		vizact.whilekeydown(viz.KEY_DOWN,pointer.setEuler,[0,vizact.elapsed(-90),0],viz.REL_LOCAL)
+		vizact.whilekeydown(',',pointer.setEuler,[vizact.elapsed(90),0,0],viz.REL_LOCAL)
+		vizact.whilekeydown('.',pointer.setEuler,[vizact.elapsed(-90),0,0],viz.REL_LOCAL)
 		
 	elif mode == 1:
 		# Set up pointer control with the Spacemouse

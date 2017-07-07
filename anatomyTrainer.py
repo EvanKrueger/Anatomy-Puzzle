@@ -12,6 +12,7 @@ Primary file from which the Anatomy Trainer game is run.
 # Vizard modules
 import viz
 import vizact, vizshape, viztask
+import vizinfo
 
 # Custom modules
 import model
@@ -32,7 +33,8 @@ def start():
 	pointer = model.pointer
 	
 	pointer.setScale(0.012, 0.012, 0.012)
-#	pointer.setParent() # What do I want here
+	pointer.setPosition([-.4,.4,.7], viz.REL_LOCAL) # Alison: Place pointer in position where it is viz-able (ha puns) to the viewer	
+	
 	pointer.setEuler(0, -115, 0)
 	pointer.disable([viz.PHYSICS, viz.DYNAMICS])
 	
@@ -71,6 +73,18 @@ def start():
 	
 	### Launch menu system
 	model.menu = menu.MenuController()
+	
+	### Display Instructions
+		
+	INSTRUCTIONS = """ 
+Use W, X, D, A, E, Z to control the pointer. 
+Use arrow keys to spin view (**haven't decided if this will spin pointer or view**)
+Use T, G to control zoom
+Use +/- to toggle ortho view 
+Press 'L' to reset
+(Ctrl key toggles the complete puzzle)
+"""
+	infoPanel = vizinfo.InfoPanel(INSTRUCTIONS)
 	
 	### Override escape key to toggle menu
 	viz.setOption('viz.default_key.quit','0')

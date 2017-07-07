@@ -23,7 +23,78 @@ import menu
 import config
 import model
 import menu
+
 		
+# Alison: Split screen mode
+			# Adds additional Camera Views
+def splitScreen():
+	while True:
+			yield viztask.waitAll( [viztask.waitKeyDown('+'), viztask.waitTime(1) ] )
+			# Normal View
+			viewNorm = viz.addView()
+		# View from left
+			viewLeft = viz.addView() 
+			viewLeft.setPosition(4,1.4,0)
+			viewLeft.setEuler(-90,0,0)
+		# View from rear
+			viewRear = viz.addView ()
+			viewRear.setPosition(0,1.4,3)
+			viewRear.setEuler(180,0,0)
+
+# Add additional Windows
+		# Left window
+			Left = viz.addWindow()
+			Left.setSize([0.5,0.5])
+			Left.setPosition([0.5,1])
+		# Rear window
+			Rear = viz.addWindow()
+			Rear.setSize([0.5,0.5])
+			Rear.setPosition([0.5,0.5])
+		# Normal window
+			Norm = viz.addWindow()
+			Norm.setSize([0.5,1])
+			Norm.setPosition([0,1])
+	
+		# Assign views to windows
+			Norm.setView(viz.MainView)
+			Left.setView(viewLeft)
+			Rear.setView(viewRear)
+viztask.schedule(splitScreen() )			
+
+def endSplitScreen(): # Alison: 
+	while True:
+		yield viztask.waitAll([viztask.waitKeyDown('-'), viztask.waitTime(1) ] )
+		# Normal View
+		viewNorm = viz.addView()
+		# View from left
+		viewLeft = viz.addView() 
+		viewLeft.setPosition(4,1.4,0)
+		viewLeft.setEuler(-90,0,0)
+		# View from rear
+		viewRear = viz.addView ()
+		viewRear.setPosition(0,1.4,3)
+		viewRear.setEuler(180,0,0)
+
+# Add (non-existent) additional Windows
+		# Left window
+		Left = viz.addWindow()
+		Left.setSize([0,0])
+		Left.setPosition([0.5,1])
+		# Rear window
+		Rear = viz.addWindow()
+		Rear.setSize([0,0])
+		Rear.setPosition([0.5,0.5])
+		# Normal window
+		Norm = viz.addWindow()
+		Norm.setSize([1,1])
+		Norm.setPosition([0,1])
+	
+		# Assign views to windows
+		Norm.setView(viz.MainView)
+		Left.setView(viewLeft)
+		Rear.setView(viewRear)
+		
+viztask.schedule(endSplitScreen() )		
 class InterfaceTutorial(object):
 	"""
 	This game mode is intended to instruct novice users in the use of the SpaceMouse
@@ -46,7 +117,7 @@ class InterfaceTutorial(object):
 		
 		sf = 0.5
 #		model.pointer.setEuler(0,0,0)
-		model.pointer.setPosition((.4,-.4,.7), viz.REL_LOCAL) # Alison: Place pointer in position where it is viz-able (ha puns) to the viewer
+		model.pointer.setPosition([.4,-.4,-.7], viz.REL_LOCAL) # Alison: Place pointer in position where it is viz-able (ha puns) to the viewer
 		self.gloveStart = model.pointer.getPosition()
 		self.iterations = 0
 		self.origPosVec = config.SMPositionScale

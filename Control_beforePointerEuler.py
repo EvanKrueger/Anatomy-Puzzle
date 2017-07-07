@@ -1,14 +1,11 @@
-﻿""" 7/1 copy
-"""
-
-import viz
+﻿import viz
 import vizshape
 import vizact
 import viztask
 
 #import mouseHandler
 
-class Control_7_05(viz.EventClass):
+class Control(viz.EventClass):
 
 
 	def __init__(self,controlScheme):
@@ -39,29 +36,21 @@ class Control_7_05(viz.EventClass):
 			vizact.whilekeydown('a',self.pointer.setPosition,[vizact.elapsed(-1),0,0],viz.REL_PARENT)
 			vizact.whilekeydown('e',self.pointer.setPosition,[0,0,vizact.elapsed(1)],viz.REL_PARENT)
 			vizact.whilekeydown('z',self.pointer.setPosition,[0,0,vizact.elapsed(-1)],viz.REL_PARENT)
-			
-			# Alison: Adjust pointer orientation (euler)
-			vizact.whilekeydown(viz.KEY_RIGHT,pointer.setEuler,[vizact.elapsed(90),0,0],viz.REL_PARENT)
-			vizact.whilekeydown(viz.KEY_LEFT,pointer.setEuler,[vizact.elapsed(-90),0,0],viz.REL_PARENT)
-			vizact.whilekeydown(viz.KEY_UP,pointer.setEuler,[0,vizact.elapsed(-90),0],viz.REL_PARENT)
-			vizact.whilekeydown(viz.KEY_DOWN,pointer.setEuler,[0,vizact.elapsed(90),0],viz.REL_PARENT)
-		
 		elif self.controlScheme == "3dMouse":
 			self.init3dMouse()
-		elif self.controlScheme == "mouseControl": # Alison: Added following section
-			pass
-			#### add stuff here
+
 
 	def initCamera(self):
 				
-		self.pointer.setParent(self.camcenter) 
-		#Default camera keys # Alison: commented out next 6 lines
-#		vizact.whilekeydown(viz.KEY_RIGHT,self.camlink.setEuler,[vizact.elapsed(-90),0,0],viz.REL_GLOBAL)
-#		vizact.whilekeydown(viz.KEY_LEFT,self.camlink.setEuler,[vizact.elapsed(90),0,0],viz.REL_GLOBAL)
-#		vizact.whilekeydown(viz.KEY_UP,self.camlink.setEuler,[0,vizact.elapsed(90),0],viz.REL_LOCAL)
-#		vizact.whilekeydown(viz.KEY_DOWN,self.camlink.setEuler,[0,vizact.elapsed(-90),0],viz.REL_LOCAL)
-#		vizact.whilekeydown(viz.KEY_KP_0, camlink.preTrans,[0,0,vizact.elapsed(-4)])
-#		vizact.whilekeydown(viz.KEY_CONTROL_R, camlink.preTrans,[0,0,vizact.elapsed(4)])		
+		self.pointer.setParent(self.camcenter)
+	
+		#Default camera keys
+		vizact.whilekeydown(viz.KEY_RIGHT,self.camlink.setEuler,[vizact.elapsed(-90),0,0],viz.REL_GLOBAL)
+		vizact.whilekeydown(viz.KEY_LEFT,self.camlink.setEuler,[vizact.elapsed(90),0,0],viz.REL_GLOBAL)
+		vizact.whilekeydown(viz.KEY_UP,self.camlink.setEuler,[0,vizact.elapsed(90),0],viz.REL_LOCAL)
+		vizact.whilekeydown(viz.KEY_DOWN,self.camlink.setEuler,[0,vizact.elapsed(-90),0],viz.REL_LOCAL)
+		vizact.whilekeydown(viz.KEY_KP_0, camlink.preTrans,[0,0,vizact.elapsed(-4)])
+		vizact.whilekeydown(viz.KEY_CONTROL_R, camlink.preTrans,[0,0,vizact.elapsed(4)])		
 		
 	def init3dMouse(self):
 		connexion = viz.add('3dconnexion.dle')
