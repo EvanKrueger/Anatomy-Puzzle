@@ -29,10 +29,10 @@ def start():
 
 	### Initialize pointer tool
 	
-	model.pointer = viz.addChild('.\\dataset\\Hand\\handPoint_reduced.ply') # Added parent thing here
+	model.pointer = viz.addChild('.\\dataset\\Hand\\pin.obj') # Added parent thing here
 	pointer = model.pointer
 	
-	pointer.setScale(0.012, 0.012, 0.012)
+	pointer.setScale(0.0012, 0.0012, 0.0012)
 	pointer.setPosition([-.4,.4,.7], viz.REL_LOCAL) # Alison: Place pointer in position where it is viz-able (ha puns) to the viewer	
 	
 	pointer.setEuler(0, -115, 0)

@@ -41,8 +41,8 @@ class control(viz.EventClass):
 			vizact.whilekeydown('z',self.pointer.setPosition,[0,0,vizact.elapsed(-1)],viz.REL_PARENT)
 			
 			# Alison: Adjust pointer orientation (euler)
-			vizact.whilekeydown(viz.KEY_RIGHT,pointer.setEuler,[vizact.elapsed(90),0,0],viz.REL_PARENT)
-			vizact.whilekeydown(viz.KEY_LEFT,pointer.setEuler,[vizact.elapsed(-90),0,0],viz.REL_PARENT)
+#			vizact.whilekeydown(viz.KEY_RIGHT,pointer.setEuler,[vizact.elapsed(90),0,0],viz.REL_PARENT)
+#			vizact.whilekeydown(viz.KEY_LEFT,pointer.setEuler,[vizact.elapsed(-90),0,0],viz.REL_PARENT)
 			vizact.whilekeydown(viz.KEY_UP,pointer.setEuler,[0,vizact.elapsed(-90),0],viz.REL_PARENT)
 			vizact.whilekeydown(viz.KEY_DOWN,pointer.setEuler,[0,vizact.elapsed(90),0],viz.REL_PARENT)
 		
@@ -55,7 +55,7 @@ class control(viz.EventClass):
 	def initCamera(self):
 				
 		self.pointer.setParent(self.camcenter) 
-		#Default camera keys # Alison: commented out next 6 lines
+		#Default camera keys # Alison: commented out next 6 lines 
 #		vizact.whilekeydown(viz.KEY_RIGHT,self.camlink.setEuler,[vizact.elapsed(-90),0,0],viz.REL_GLOBAL)
 #		vizact.whilekeydown(viz.KEY_LEFT,self.camlink.setEuler,[vizact.elapsed(90),0,0],viz.REL_GLOBAL)
 #		vizact.whilekeydown(viz.KEY_UP,self.camlink.setEuler,[0,vizact.elapsed(90),0],viz.REL_LOCAL)

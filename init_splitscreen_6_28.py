@@ -344,9 +344,9 @@ class DisplayInstance():
 #			viztask.schedule(controlScheme.performKeyMovements(self.camcenter, camlink))
 #			viztask.schedule(controlScheme.cameraFocus(self.camcenter, camlink))		
 			
-			#backup control functions:
-#			vizact.whilekeydown(viz.KEY_RIGHT,self.camcenter.setEuler,[vizact.elapsed(90),0,0],viz.REL_GLOBAL)
-#			vizact.whilekeydown(viz.KEY_LEFT,self.camcenter.setEuler,[vizact.elapsed(-90),0,0],viz.REL_GLOBAL)
+			#backup control functions: #Alison: I don't think these are actually back up... I think these are 
+			vizact.whilekeydown(viz.KEY_RIGHT,self.camcenter.setPosition,[vizact.elapsed(2),0,0],viz.REL_GLOBAL) 
+			vizact.whilekeydown(viz.KEY_LEFT,self.camcenter.setPosition,[vizact.elapsed(-2),0,0],viz.REL_GLOBAL)
 #			vizact.whilekeydown(viz.KEY_UP,self.camcenter.setEuler,[0,vizact.elapsed(-90),0],viz.REL_LOCAL)
 #			vizact.whilekeydown(viz.KEY_DOWN,self.camcenter.setEuler,[0,vizact.elapsed(90),0],viz.REL_LOCAL)
 			vizact.whilekeydown( 't' , self.camcenter.setPosition,[0,0,vizact.elapsed(4)],viz.REL_LOCAL)
@@ -447,20 +447,21 @@ def pointerInput(mode, pointer, arena):
 		#fixedRotation.setMask(viz.LINK_ORI)
 		
 		speed = 3.0
-		vizact.whilekeydown('w',pointer.setPosition,[0,vizact.elapsed(speed),0],viz.REL_LOCAL)
-		vizact.whilekeydown('x',pointer.setPosition,[0,vizact.elapsed(-speed),0],viz.REL_LOCAL)
-		vizact.whilekeydown('d',pointer.setPosition,[vizact.elapsed(speed),0,0],viz.REL_LOCAL)
-		vizact.whilekeydown('a',pointer.setPosition,[vizact.elapsed(-speed),0,0],viz.REL_LOCAL)
-		vizact.whilekeydown('e',pointer.setPosition,[0,0,vizact.elapsed(speed)],viz.REL_LOCAL)
-		vizact.whilekeydown('z',pointer.setPosition,[0,0,vizact.elapsed(-speed)],viz.REL_LOCAL)
+		vizact.whilekeydown('w',pointer.setPosition,[0,vizact.elapsed(speed),0],viz.REL_GLOBAL)
+		vizact.whilekeydown('x',pointer.setPosition,[0,vizact.elapsed(-speed),0],viz.REL_GLOBAL)
+		vizact.whilekeydown('d',pointer.setPosition,[vizact.elapsed(speed),0,0],viz.REL_GLOBAL)
+		vizact.whilekeydown('a',pointer.setPosition,[vizact.elapsed(-speed),0,0],viz.REL_GLOBAL)
+		vizact.whilekeydown('e',pointer.setPosition,[0,0,vizact.elapsed(speed)],viz.REL_GLOBAL)
+		vizact.whilekeydown('z',pointer.setPosition,[0,0,vizact.elapsed(-speed)],viz.REL_GLOBAL)
 		
 		# Adjust pointer orientation (euler)
-		vizact.whilekeydown(viz.KEY_RIGHT,pointer.setEuler,[0,0, vizact.elapsed(90)],viz.REL_LOCAL)
-		vizact.whilekeydown(viz.KEY_LEFT,pointer.setEuler,[0,0,vizact.elapsed(-90)],viz.REL_LOCAL)
+#		vizact.whilekeydown(viz.KEY_RIGHT,pointer.setEuler,[0,0, vizact.elapsed(90)],viz.REL_LOCAL)
+#		vizact.whilekeydown(viz.KEY_LEFT,pointer.setEuler,[0,0,vizact.elapsed(-90)],viz.REL_LOCAL)
 		vizact.whilekeydown(viz.KEY_UP,pointer.setEuler,[0,vizact.elapsed(90),0],viz.REL_LOCAL)
 		vizact.whilekeydown(viz.KEY_DOWN,pointer.setEuler,[0,vizact.elapsed(-90),0],viz.REL_LOCAL)
-		vizact.whilekeydown(',',pointer.setEuler,[vizact.elapsed(90),0,0],viz.REL_LOCAL)
-		vizact.whilekeydown('.',pointer.setEuler,[vizact.elapsed(-90),0,0],viz.REL_LOCAL)
+		vizact.whilekeydown(',',pointer.setEuler,[vizact.elapsed(90),0,0],viz.REL_GLOBAL)
+		vizact.whilekeydown('.',pointer.setEuler,[vizact.elapsed(-90),0,0],viz.REL_GLOBAL)
+		vizact.whilekeydown('/',pointer.setEuler,[0,0, vizact.elapsed(90)],viz.REL_LOCAL)
 		
 	elif mode == 1:
 		# Set up pointer control with the Spacemouse

@@ -801,6 +801,9 @@ class FreePlay(PuzzleController):
 
 		self.score = PuzzleScore(self.modeName)
 		
+# Pointer Position # Alison: Added
+		model.pointer.setPosition((.4,-.4,.7), viz.REL_PARENT) # Alison: Place pointer in position where it is viz-able (ha puns) to the viewer		
+		
 #		viztask.schedule(soundTask(glove))
 
 		self._meshesToLoad = model.ds.getOntologySet(dataset)
@@ -829,7 +832,7 @@ class FreePlay(PuzzleController):
 				return target
 		else:
 			return self.getAdjacent(self._lastGrabbed, self.getEnabled())[0]
-			
+
 	def hideNonActive(self, activeBox):
 		"""Hides non-active bounding boxes and their elements"""
 		if not activeBox.regionGroup.allRegionsFinished:
@@ -1345,7 +1348,7 @@ class BoundingBox(viz.VizNode):
 				
 			self._imploded = True
 #		self._keyBindings[3].setEnabled(viz.OFF)  #disable snap key down event
-
+			
 	def explode(self):
 		"""Move bones to position before implode was called"""
 		if self._imploded:
@@ -1356,7 +1359,7 @@ class BoundingBox(viz.VizNode):
 				m.moveTo(m.loadMat(), time = 0.6, relation = viz.ABS_PARENT)
 			self._imploded = False
 #		self._keyBindings[3].setEnabled(viz.ON) #enable snap key down event
-		
+
 class RegionGroup ():
 		def __init__(self, members):
 			self.members = []
