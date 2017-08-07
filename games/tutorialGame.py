@@ -18,7 +18,7 @@ import datetime
 import random
 
 #custom
-import init_walk_around_6_28
+import init_splitscreen_6_28
 import menu
 import config
 import model
@@ -502,15 +502,19 @@ class TutorialData():
 			print "No directory?"
 			raise
 		self.csv = csv.writer(self.scoreFile)
-		self.header = ['timestamp','event','event result']
+		# self.header = ['timestamp','event','event result']
+		self.header = ['timestamp','event', 'event result','x', 'y', 'z', 'angular offset', 'positional offset']
 		self.events = []
 		self.csv.writerow(self.header)
 		
-	def event(self, event = "release", result = 'Did Not Snap'):
+	# def event(self, event = "release", result = 'Did Not Snap'):
+	def event(self, x = 'n/a', y = 'n/a', z = 'n/a', event = "release", result = 'Did Not Snap', angOffset = 'n/a', posOffset = 'n/a'):
 		'''record event'''
-		currentEvent = dict(zip(self.header,[time.clock(), event, result]))
-		self.events.append(currentEvent)
-		self.csv.writerow([self.events[-1][column] for column in self.header])
+		currentEvent = dict(zip(self.header,[time.clock(), event, result, x,y,z,angOffset,posOffset]))
+		self.csv.writerow([currentEvent[column] for column in self.header])
+#		currentEvent = dict(zip(self.header,[time.clock(), event, result]))
+#		self.events.append(currentEvent)
+#		self.csv.writerow([self.events[-1][column] for column in self.header])
 		
 	def close(self):
 		self.scoreFile.close()

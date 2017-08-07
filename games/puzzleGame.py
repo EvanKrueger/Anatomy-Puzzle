@@ -16,7 +16,7 @@ import time, datetime
 import threading
 
 # Custom modules
-import init_walk_around_6_28
+import init_splitscreen_6_28
 import menu
 import config
 import model
@@ -59,8 +59,8 @@ class PuzzleController(object):
 		
 		self._pointerTexture	= model.pointer.getTexture()
 		self._pointerOrigColor	= model.pointer.getColor()
-		model.pointer.setPosition([.4,-.4,.7], viz.REL_LOCAL) # Alison: Place pointer in position where it is viz-able (ha puns) to the viewer
-		
+		model.pointer.setPosition([.4,-.4,.7], viz.REL_GLOBAL) # Alison: Place pointer in position where it is viz-able (ha puns) to the viewer
+
 #		self.viewcube = puzzleView.viewCube()
 		
 		viztask.schedule(self.load(dataset))
@@ -672,7 +672,7 @@ class PuzzleController(object):
 			self._keyBindings[3].setEnabled(viz.OFF)  #disable snap key down event
 			self._keyBindings[4].setEnabled(viz.OFF)  #disable snap key down event
 			self._imploded = True
-
+			
 	def explode(self):
 		"""Move bones to position before implode was called"""
 		if self._imploded:
@@ -700,7 +700,7 @@ class PuzzleController(object):
 			self.implode()
 		else:
 			self.explode()
-
+	# Alison: Attempt (here) to show invisible "imploded" pieces
 
 	def bindKeys(self):
 		"""Define all key bindings and store them in a list"""
@@ -800,10 +800,7 @@ class FreePlay(PuzzleController):
 		model.pointer.setPosition((.4,-.4,.7), viz.REL_PARENT) # Alison: Place pointer in position where it is viz-able (ha puns) to the viewer
 
 		self.score = PuzzleScore(self.modeName)
-		
-# Pointer Position # Alison: Added
-		model.pointer.setPosition((.4,-.4,.7), viz.REL_PARENT) # Alison: Place pointer in position where it is viz-able (ha puns) to the viewer		
-		
+
 #		viztask.schedule(soundTask(glove))
 
 		self._meshesToLoad = model.ds.getOntologySet(dataset)

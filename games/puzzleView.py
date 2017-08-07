@@ -318,3 +318,4 @@ class viewCube():
 			self.frontalLabel.disable([viz.RENDERING])
 			self.transverseLabel.disable([viz.RENDERING])
 			self.sagittalLabel.disable([viz.RENDERING])
+			

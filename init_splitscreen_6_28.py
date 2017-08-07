@@ -347,8 +347,8 @@ class DisplayInstance():
 			#backup control functions: #Alison: I don't think these are actually back up... I think these are 
 			vizact.whilekeydown(viz.KEY_RIGHT,self.camcenter.setPosition,[vizact.elapsed(2),0,0],viz.REL_GLOBAL) 
 			vizact.whilekeydown(viz.KEY_LEFT,self.camcenter.setPosition,[vizact.elapsed(-2),0,0],viz.REL_GLOBAL)
-#			vizact.whilekeydown(viz.KEY_UP,self.camcenter.setEuler,[0,vizact.elapsed(-90),0],viz.REL_LOCAL)
-#			vizact.whilekeydown(viz.KEY_DOWN,self.camcenter.setEuler,[0,vizact.elapsed(90),0],viz.REL_LOCAL)
+			vizact.whilekeydown(viz.KEY_UP,self.camcenter.setEuler,[0,vizact.elapsed(-90),0],viz.REL_LOCAL)
+			vizact.whilekeydown(viz.KEY_DOWN,self.camcenter.setEuler,[0,vizact.elapsed(90),0],viz.REL_LOCAL)
 			vizact.whilekeydown( 't' , self.camcenter.setPosition,[0,0,vizact.elapsed(4)],viz.REL_LOCAL)
 			vizact.whilekeydown( 'g' ,  self.camcenter.setPosition,[0,0,vizact.elapsed(-4)],viz.REL_LOCAL)
 		
@@ -428,14 +428,14 @@ def pointerInput(mode, pointer, arena):
 	theTarget = vizproximity.Target(pointer)
 	
 # the pointer
-	pointer.setPosition([.4,-.4,-.7], viz.REL_LOCAL) # Alison: Place pointer in position where it is viz-able (ha puns) to the viewer	
+	pointer.setPosition([.4,-.4,-.7], viz.REL_GLOBAL) # Alison: Place pointer in position where it is viz-able (ha puns) to the viewer	
 	
 #	proxy.addSensor(theSensor)
 	proxy.addTarget(theTarget)
 		
 	vizact.onkeydown('l',pointer.setPosition,[.4,-.4,-.7])
-	vizact.onkeydown('l',pointer.setVelocity,[0,0,0])	
-	vizact.onkeydown('l',pointer.setAngularVelocity,[0,0,0])
+#	vizact.onkeydown('l',pointer.setVelocity,[0,0,0])	
+#	vizact.onkeydown('l',pointer.setAngularVelocity,[0,0,0])
 	
 	if mode == 0:
 		# Keyboard driven pointer, in case you don't have a space mouse
@@ -447,18 +447,24 @@ def pointerInput(mode, pointer, arena):
 		#fixedRotation.setMask(viz.LINK_ORI)
 		
 		speed = 3.0
-		vizact.whilekeydown('w',pointer.setPosition,[0,vizact.elapsed(speed),0],viz.REL_GLOBAL)
-		vizact.whilekeydown('x',pointer.setPosition,[0,vizact.elapsed(-speed),0],viz.REL_GLOBAL)
-		vizact.whilekeydown('d',pointer.setPosition,[vizact.elapsed(speed),0,0],viz.REL_GLOBAL)
+		vizact.whilekeydown('w',pointer.setPosition,[0,0,vizact.elapsed(speed)],viz.REL_GLOBAL)
+		vizact.whilekeydown('s',pointer.setPosition,[0,0,vizact.elapsed(-speed)],viz.REL_GLOBAL)
 		vizact.whilekeydown('a',pointer.setPosition,[vizact.elapsed(-speed),0,0],viz.REL_GLOBAL)
-		vizact.whilekeydown('e',pointer.setPosition,[0,0,vizact.elapsed(speed)],viz.REL_GLOBAL)
-		vizact.whilekeydown('z',pointer.setPosition,[0,0,vizact.elapsed(-speed)],viz.REL_GLOBAL)
+		vizact.whilekeydown('d',pointer.setPosition,[vizact.elapsed(speed),0,0],viz.REL_GLOBAL)
+		vizact.whilekeydown('e',pointer.setPosition,[0,vizact.elapsed(speed),0],viz.REL_GLOBAL)
+		vizact.whilekeydown('x',pointer.setPosition,[0,vizact.elapsed(-speed),0],viz.REL_GLOBAL)
+		
+		
+		
+		
 		
 		# Adjust pointer orientation (euler)
 #		vizact.whilekeydown(viz.KEY_RIGHT,pointer.setEuler,[0,0, vizact.elapsed(90)],viz.REL_LOCAL)
 #		vizact.whilekeydown(viz.KEY_LEFT,pointer.setEuler,[0,0,vizact.elapsed(-90)],viz.REL_LOCAL)
-		vizact.whilekeydown(viz.KEY_UP,pointer.setEuler,[0,vizact.elapsed(90),0],viz.REL_LOCAL)
-		vizact.whilekeydown(viz.KEY_DOWN,pointer.setEuler,[0,vizact.elapsed(-90),0],viz.REL_LOCAL)
+#		vizact.whilekeydown(viz.KEY_UP,pointer.setEuler,[0,vizact.elapsed(90),0],viz.REL_LOCAL)
+#		vizact.whilekeydown(viz.KEY_DOWN,pointer.setEuler,[0,vizact.elapsed(-90),0],viz.REL_LOCAL)
+		vizact.whilekeydown(';',pointer.setEuler,[0,vizact.elapsed(90),0],viz.REL_LOCAL)
+#		vizact.whilekeydown('',pointer.setEuler,[0,vizact.elapsed(-90),0],viz.REL_LOCAL)
 		vizact.whilekeydown(',',pointer.setEuler,[vizact.elapsed(90),0,0],viz.REL_GLOBAL)
 		vizact.whilekeydown('.',pointer.setEuler,[vizact.elapsed(-90),0,0],viz.REL_GLOBAL)
 		vizact.whilekeydown('/',pointer.setEuler,[0,0, vizact.elapsed(90)],viz.REL_LOCAL)

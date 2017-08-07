@@ -77,14 +77,17 @@ def start():
 	### Display Instructions
 		
 	INSTRUCTIONS = """ 
-Use W, X, D, A, E, Z to control the pointer. 
-Use arrow keys to spin view (**haven't decided if this will spin pointer or view**)
-Use T, G to control zoom
-Use +/- to toggle ortho view 
-Press 'L' to reset
-(Ctrl key toggles the complete puzzle)
+Use W/A/S/D and E/X to control the pointer's position
+Use arrow keys to move the camera left/right and to tilt the camera up/down
+Use T/G to control zoom
+Use +/- to toggle ortho views
+Use ,/./; to control the pointer's orientation
+Press SPACEBAR to grab object
+Press F1 to exit pannel (NOTE: This also removes the ESC function to exit. Press F1 again to turn pannels back on) 
+(Ctrl key toggles the complete puzzle in FREE PLAY mode)
 """
 	infoPanel = vizinfo.InfoPanel(INSTRUCTIONS)
+#	infoPanel.setPanelVisible(viz.TOGGLE)
 	
 	### Override escape key to toggle menu
 	viz.setOption('viz.default_key.quit','0')
@@ -99,6 +102,7 @@ Press 'L' to reset
 	vizact.onexit(endGame)
 	
 def startGame(game, dataset):
+	print game
 	if model.gameController:
 		return
 	model.gameController = game(dataset)
